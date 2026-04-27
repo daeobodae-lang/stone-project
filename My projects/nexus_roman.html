@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEVINI — Portfolio</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap');
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --white:#f5f3ef;
+  --off:#e8e4dc;
+  --gold:#c9a96e;
+  --gold2:#e8d5a3;
+  --gold3:#a07840;
+  --bg:#f0ede6;
+  --bg2:#e8e4da;
+  --ink:#1a1408;
+  --mist:#9a9080;
+  --glow:rgba(201,169,110,0.6);
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Cormorant Garamond',serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* CURSOR */
+#cur{width:6px;height:6px;background:var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .15s}
+#cur-r{width:32px;height:32px;border:1px solid rgba(201,169,110,.6);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .1s ease}
+
+/* NOISE */
+#noise{position:fixed;top:-50%;left:-50%;width:200%;height:200%;z-index:2;pointer-events:none;opacity:.025;animation:grain .6s steps(1) infinite;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+@keyframes grain{0%,100%{transform:translate(0,0)}20%{transform:translate(-5%,-10%)}40%{transform:translate(-10%,5%)}60%{transform:translate(5%,-5%)}80%{transform:translate(10%,10%)}}
+
+/* CANVAS */
+#canvas-wrap{position:fixed;inset:0;z-index:0}
+canvas{display:block;width:100%;height:100%}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:28px 56px;display:flex;justify-content:space-between;align-items:center}
+nav::after{content:'';position:absolute;bottom:0;left:56px;right:56px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,169,110,.4),transparent)}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.35em;color:var(--gold3);text-decoration:none}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist);text-decoration:none;transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bg);background:var(--gold3);padding:10px 22px;text-decoration:none;transition:background .3s}
+.nav-cta:hover{background:var(--gold)}
+
+/* BADGE */
+.badge{position:fixed;top:90px;left:50%;transform:translateX(-50%);z-index:100;background:rgba(240,237,230,.85);backdrop-filter:blur(12px);border:1px solid rgba(201,169,110,.4);padding:8px 20px;display:flex;align-items:center;gap:8px;opacity:0;animation:fadeIn .8s ease 2s forwards}
+.badge-dot{width:7px;height:7px;border-radius:50%;background:#e05a2b;box-shadow:0 0 8px #e05a2b}
+.badge-txt{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--mist)}
+
+/* HERO */
+#hero{position:relative;z-index:10;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:80px;text-align:center;pointer-events:none}
+.hero-label{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold3);margin-bottom:20px;opacity:0;animation:fadeUp .8s ease 1.8s forwards}
+.hero-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(4.5rem,13vw,12rem);line-height:.85;letter-spacing:.02em;color:var(--ink);opacity:0;animation:fadeUp 1s ease 2s forwards}
+.hero-h1 .ghost{color:transparent;-webkit-text-stroke:1.5px var(--gold3)}
+.hero-h1 .italic{font-style:italic;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:.7em;color:var(--gold)}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,2vw,1.3rem);font-weight:300;color:var(--mist);margin-top:20px;opacity:0;animation:fadeUp .8s ease 2.3s forwards;letter-spacing:.05em}
+
+/* SCROLL CUE */
+.scroll-cue{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeIn .8s ease 3s forwards}
+.scroll-cue span{font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.3em;text-transform:uppercase;color:var(--mist)}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease infinite}
+@keyframes scrollPulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* FLOATING INFO CARD — like in the video */
+.info-card{position:fixed;bottom:160px;left:60px;z-index:50;background:rgba(245,243,239,.92);backdrop-filter:blur(16px);border:1px solid rgba(201,169,110,.25);padding:20px 24px;width:210px;opacity:0;transform:translateX(-20px);transition:all .5s ease;pointer-events:none}
+.info-card.show{opacity:1;transform:translateX(0)}
+.info-card-tag{font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold3);margin-bottom:10px}
+.info-card-title{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:6px;line-height:1.2}
+.info-card-desc{font-family:'Cormorant Garamond',serif;font-size:.8rem;font-weight:300;color:var(--mist);line-height:1.6;margin-bottom:12px}
+.info-card-num{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);letter-spacing:.05em;line-height:1}
+.info-card-num-label{font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mist)}
+
+/* SECTIONS */
+section.page{position:relative;z-index:10;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:120px 56px}
+
+/* ABOUT */
+#about{background:rgba(240,237,230,.02)}
+.about-inner{max-width:1300px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center}
+.sec-tag{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold3);margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.sec-tag::before{content:'';width:20px;height:1px;background:var(--gold3)}
+.about-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,5.5vw,5rem);line-height:.9;color:var(--ink);margin-bottom:30px}
+.about-h em{font-style:italic;color:var(--gold);font-family:'Cormorant Garamond',serif;font-weight:300}
+.about-p{font-size:1.05rem;font-weight:300;color:var(--mist);line-height:1.95;margin-bottom:16px;letter-spacing:.02em}
+.about-right{display:flex;flex-direction:column;gap:1px;background:rgba(201,169,110,.15)}
+.stat{background:var(--bg);padding:28px 32px;transition:background .3s}
+.stat:hover{background:var(--off)}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--gold);line-height:1;margin-bottom:4px}
+.stat-l{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)}
+
+/* SERVICES */
+#services{background:var(--ink);padding:120px 56px}
+#services .sec-tag{color:var(--gold)}
+#services .sec-tag::before{background:var(--gold)}
+.srv-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,7vw,6.5rem);line-height:.85;color:var(--white);margin-bottom:70px}
+.srv-h span{color:var(--gold)}
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(201,169,110,.1);max-width:1300px;width:100%}
+.srv-item{background:var(--ink);padding:44px 36px;position:relative;overflow:hidden;transition:background .4s;cursor:default}
+.srv-item::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.srv-item:hover{background:#0f0e0a}
+.srv-item:hover::after{transform:scaleX(1)}
+.srv-n{font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.25em;color:var(--gold3);margin-bottom:36px}
+.srv-name{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;color:var(--white);margin-bottom:14px;letter-spacing:.05em}
+.srv-desc{font-size:.88rem;color:rgba(232,228,218,.5);line-height:1.85;font-weight:300}
+
+/* MARQUEE */
+.marquee-wrap{overflow:hidden;padding:70px 0;background:var(--off);border-top:1px solid rgba(201,169,110,.2);border-bottom:1px solid rgba(201,169,110,.2)}
+.marquee-row{display:flex;white-space:nowrap;gap:0}
+.marquee-row.r1{animation:mLeft 22s linear infinite}
+.marquee-row.r2{animation:mRight 28s linear infinite;margin-top:12px}
+.mw{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4.5rem);letter-spacing:.04em;padding:0 32px;color:transparent;-webkit-text-stroke:1px rgba(160,120,64,.3);transition:all .3s}
+.mw:hover{color:var(--gold3);-webkit-text-stroke:1px var(--gold3)}
+.mw.fill{color:var(--gold3);-webkit-text-stroke:none}
+@keyframes mLeft{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes mRight{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+
+/* CTA */
+#cta{flex-direction:column;text-align:center;position:relative;padding:160px 56px}
+#cta::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:1px;height:80px;background:linear-gradient(to bottom,transparent,var(--gold))}
+.cta-label{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold3);margin-bottom:36px}
+.cta-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,11vw,9.5rem);line-height:.85;margin-bottom:50px;color:var(--ink)}
+.cta-h .outline{color:transparent;-webkit-text-stroke:1.5px var(--gold3)}
+.cta-btn{display:inline-flex;align-items:center;gap:14px;font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--bg);background:var(--gold3);padding:18px 44px;text-decoration:none;transition:background .3s;position:relative;overflow:hidden}
+.cta-btn::before{content:'';position:absolute;inset:0;background:var(--gold);transform:translateX(-100%);transition:transform .4s ease}
+.cta-btn:hover::before{transform:translateX(0)}
+.cta-btn span{position:relative;z-index:1}
+.cta-s{display:block;margin-top:20px;font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist);text-decoration:none;transition:color .3s}
+.cta-s:hover{color:var(--gold3)}
+
+/* FOOTER */
+footer{border-top:1px solid rgba(201,169,110,.2);padding:36px 56px;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:10;background:var(--bg)}
+.f-logo{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.35em;color:var(--gold3)}
+.f-copy{font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.15em;color:var(--mist)}
+.f-links{display:flex;gap:28px;list-style:none}
+.f-links a{font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mist);text-decoration:none;transition:color .3s}
+.f-links a:hover{color:var(--gold3)}
+
+/* TICKER */
+.ticker{position:fixed;bottom:0;left:0;right:0;z-index:50;background:rgba(240,237,230,.88);backdrop-filter:blur(12px);border-top:1px solid rgba(201,169,110,.25);padding:9px 0;overflow:hidden}
+.ticker-inner{display:flex;white-space:nowrap;animation:tickerMove 28s linear infinite;gap:60px}
+.ti{font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mist);flex-shrink:0}
+.ti .n{color:var(--gold3);font-weight:700}
+@keyframes tickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* LOADER */
+#loader{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;transition:opacity 1s ease,visibility 1s ease}
+#loader.gone{opacity:0;visibility:hidden}
+.l-logo{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;letter-spacing:.4em;color:var(--gold3);animation:breathe 1.5s ease infinite}
+@keyframes breathe{0%,100%{opacity:1}50%{opacity:.25}}
+.l-bar-w{width:180px;height:1px;background:rgba(201,169,110,.2);position:relative;overflow:hidden}
+.l-bar{position:absolute;top:0;left:0;height:100%;background:var(--gold3);animation:loadB 1.8s ease forwards}
+@keyframes loadB{from{width:0}to{width:100%}}
+.l-txt{font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.3em;text-transform:uppercase;color:var(--mist)}
+
+/* ANIMS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .9s ease,transform .9s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:800px){
+  nav{padding:20px 24px}nav::after{left:24px;right:24px}.nav-links,.nav-cta{display:none}
+  #hero{padding-bottom:60px}.info-card{left:16px;bottom:120px;width:180px}
+  section.page{padding:80px 24px}.about-inner{grid-template-columns:1fr;gap:48px}
+  .srv-grid{grid-template-columns:1fr}#cta{padding:100px 24px}
+  footer{flex-direction:column;gap:20px;text-align:center;padding:28px 24px}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="l-logo">DEVINI</div>
+  <div class="l-bar-w"><div class="l-bar"></div></div>
+  <div class="l-txt">Sculpting Experience</div>
+</div>
+
+<!-- CURSOR -->
+<div id="cur"></div>
+<div id="cur-r"></div>
+<div id="noise"></div>
+
+<!-- THREE.JS CANVAS -->
+<div id="canvas-wrap"></div>
+
+<!-- BADGE -->
+<div class="badge">
+  <div class="badge-dot"></div>
+  <div class="badge-txt">Dayoub</div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">DEVINI</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#cta">Contact</a></li>
+  </ul>
+  <a href="#cta" class="nav-cta">Book a Call →</a>
+</nav>
+
+<!-- FLOATING INFO CARD -->
+<div class="info-card" id="infoCard">
+  <div class="info-card-tag">01 — AI Automation</div>
+  <div class="info-card-title">AI-Powered Automation</div>
+  <div class="info-card-desc">End-to-end systems that eliminate repetitive tasks and scale your operations effortlessly.</div>
+  <div class="info-card-num">10<span style="font-size:1rem">x</span></div>
+  <div class="info-card-num-label">Efficiency Gain</div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-label">Next-Generation Digital Studio</div>
+  <h1 class="hero-h1">
+    BEYOND<br>
+    <span class="ghost">DIGITAL</span><br>
+    <span class="italic">Excellence</span>
+  </h1>
+  <p class="hero-sub">Where marble meets machine. Crafted for those<br>who demand the extraordinary.</p>
+  <div class="scroll-cue">
+    <span>Explore</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-row r1">
+    <span class="mw fill">DESIGN</span><span class="mw">INNOVATION</span><span class="mw fill">CRAFT</span><span class="mw">EXCELLENCE</span><span class="mw fill">VISION</span><span class="mw">LEGACY</span><span class="mw fill">DESIGN</span><span class="mw">INNOVATION</span><span class="mw fill">CRAFT</span><span class="mw">EXCELLENCE</span>
+  </div>
+  <div class="marquee-row r2">
+    <span class="mw">FUTURE</span><span class="mw fill">TECHNOLOGY</span><span class="mw">ARCHITECTURE</span><span class="mw fill">MOTION</span><span class="mw">EXPERIENCE</span><span class="mw fill">PRESENCE</span><span class="mw">FUTURE</span><span class="mw fill">TECHNOLOGY</span><span class="mw">ARCHITECTURE</span><span class="mw fill">MOTION</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="page" id="about">
+  <div class="about-inner">
+    <div class="reveal">
+      <div class="sec-tag">Who We Are</div>
+      <h2 class="about-h">We don't<br>follow trends.<br>We <em>set</em> them.</h2>
+      <p class="about-p">DN is a premier luxury company that epitomizes elegance, sophistication, and excellence in every aspect of its operations. With a legacy built on unwavering commitment to quality and innovation, DN has established itself as a symbol of prestige in the luxury market.</p>
+      <p class="about-p">Our brand represents the pinnacle of craftsmanship, attention to detail, and exceptional service. From exclusive products to personalized experiences, DN delivers unparalleled luxury that exceeds expectations and creates lasting impressions.</p>
+    </div>
+    <div class="about-right reveal">
+      <div class="stat"><div class="stat-n">127+</div><div class="stat-l">Projects Delivered</div></div>
+      <div class="stat"><div class="stat-n">99%</div><div class="stat-l">Client Satisfaction</div></div>
+      <div class="stat"><div class="stat-n">14</div><div class="stat-l">International Awards</div></div>
+      <div class="stat"><div class="stat-n">∞</div><div class="stat-l">Ambition</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="page" id="services" style="flex-direction:column">
+  <div style="max-width:1300px;width:100%;margin-bottom:60px" class="reveal">
+    <div class="sec-tag">Our Craft</div>
+    <h2 class="srv-h">INTELLIGENT<br><span>ARCHITECTURE</span></h2>
+  </div>
+  <div class="srv-grid reveal">
+    <div class="srv-item"><div class="srv-n">01 —</div><div class="srv-name">3D & Interactive</div><div class="srv-desc">Cinematic three-dimensional experiences that shatter the boundary between digital and physical reality.</div></div>
+    <div class="srv-item"><div class="srv-n">02 —</div><div class="srv-name">Brand Architecture</div><div class="srv-desc">Identity systems built for longevity. Visual languages that communicate power before a word is read.</div></div>
+    <div class="srv-item"><div class="srv-n">03 —</div><div class="srv-name">AI Integration</div><div class="srv-desc">Intelligent systems woven into your ecosystem, augmenting human capability at every touchpoint.</div></div>
+    <div class="srv-item"><div class="srv-n">04 —</div><div class="srv-name">Motion Design</div><div class="srv-desc">Animation that breathes life into static concepts — choreographed with surgical precision.</div></div>
+    <div class="srv-item"><div class="srv-n">05 —</div><div class="srv-name">Backend Engineering</div><div class="srv-desc">Secure, auto-scaling infrastructure that powers enterprise at absolute performance.</div></div>
+    <div class="srv-item"><div class="srv-n">06 —</div><div class="srv-name">Digital Strategy</div><div class="srv-desc">Holistic approach from architecture to execution, aligned with your vision and growth.</div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="page" id="cta">
+  <div>
+    <div class="cta-label">— Begin Your Legacy —</div>
+    <h2 class="cta-h reveal">
+      BUILD<br>YOUR<br>
+      <span class="outline">LEGEND</span>
+    </h2>
+    <a href="#" class="cta-btn"><span>Start a Project →</span></a>
+    <a href="#" class="cta-s">Or see our process first</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">DEVINI</div>
+  <div class="f-copy">© 2024 DN Studio. All rights reserved.</div>
+  <ul class="f-links">
+    <li><a href="#">Twitter</a></li>
+    <li><a href="#">Instagram</a></li>
+    <li><a href="#">LinkedIn</a></li>
+  </ul>
+</footer>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ti"><span class="n">127</span> Projects Completed</span>
+    <span class="ti">◆ Available for New Work</span>
+    <span class="ti"><span class="n">14</span> Awards Won</span>
+    <span class="ti">◆ Global Studio</span>
+    <span class="ti"><span class="n">99%</span> Client Retention</span>
+    <span class="ti">◆ Next-Gen Digital Studio</span>
+    <span class="ti"><span class="n">127</span> Projects Completed</span>
+    <span class="ti">◆ Available for New Work</span>
+    <span class="ti"><span class="n">14</span> Awards Won</span>
+    <span class="ti">◆ Global Studio</span>
+    <span class="ti"><span class="n">99%</span> Client Retention</span>
+    <span class="ti">◆ Next-Gen Digital Studio</span>
+  </div>
+</div>
+
+<!-- THREE.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// =============================================
+// CURSOR
+// =============================================
+const cur = document.getElementById('cur');
+const curR = document.getElementById('cur-r');
+let mx=window.innerWidth/2,my=window.innerHeight/2,rx=mx,ry=my;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function loop(){
+  cur.style.cssText=`left:${mx}px;top:${my}px`;
+  rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
+  curR.style.cssText=`left:${rx}px;top:${ry}px`;
+  requestAnimationFrame(loop);
+})();
+document.querySelectorAll('a,button,.srv-item,.stat').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{curR.style.transform='translate(-50%,-50%) scale(1.8)';curR.style.borderColor='rgba(201,169,110,.9)'});
+  el.addEventListener('mouseleave',()=>{curR.style.transform='translate(-50%,-50%) scale(1)';curR.style.borderColor='rgba(201,169,110,.6)'});
+});
+
+// =============================================
+// THREE.JS — ROMAN MARBLE BUST SCENE
+// =============================================
+const wrap = document.getElementById('canvas-wrap');
+const W=window.innerWidth, H=window.innerHeight;
+const renderer = new THREE.WebGLRenderer({antialias:true,alpha:true});
+renderer.setSize(W,H);
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.shadowMap.enabled=true;
+renderer.setClearColor(0x000000,0);
+wrap.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0xf0ede6, 0.008);
+
+const camera = new THREE.PerspectiveCamera(65,W/H,0.1,500);
+camera.position.set(0,2,28);
+camera.lookAt(0,0,0);
+
+// ---- LIGHTS ----
+const ambient = new THREE.AmbientLight(0xfff8f0, 0.6);
+scene.add(ambient);
+
+// Main warm light (like sunlight hitting marble)
+const sunLight = new THREE.DirectionalLight(0xfff5e0, 2.5);
+sunLight.position.set(8,15,10);
+sunLight.castShadow=true;
+scene.add(sunLight);
+
+// Gold glow from inside (like the video's blue core, but gold)
+const coreGlow = new THREE.PointLight(0xc9a96e, 8, 25);
+coreGlow.position.set(0,1,0);
+scene.add(coreGlow);
+
+// Rim light (cool from behind)
+const rimLight = new THREE.DirectionalLight(0xddeeff, 1.2);
+rimLight.position.set(-12,5,-8);
+scene.add(rimLight);
+
+// Fill from below (golden bounce)
+const fillLight = new THREE.PointLight(0xe8d5a3, 1.5, 30);
+fillLight.position.set(0,-10,5);
+scene.add(fillLight);
+
+// ---- MATERIALS ----
+// White marble
+const marbleMat = new THREE.MeshStandardMaterial({
+  color:0xf2eeea, metalness:0.0, roughness:0.35,
+  envMapIntensity:1.0
+});
+// Gold cracked edges
+const goldMat = new THREE.MeshStandardMaterial({
+  color:0xc9a96e, metalness:0.95, roughness:0.05,
+  emissive:0xc9a96e, emissiveIntensity:0.4
+});
+// Inner glow core
+const glowMat = new THREE.MeshStandardMaterial({
+  color:0xfff0aa, metalness:0.0, roughness:0.0,
+  emissive:0xffe080, emissiveIntensity:3.0,
+  transparent:true, opacity:0.95
+});
+// Debris
+const debrisMat = new THREE.MeshStandardMaterial({
+  color:0xf0ebe3, metalness:0.0, roughness:0.4
+});
+const debrisGoldMat = new THREE.MeshStandardMaterial({
+  color:0xc9a96e, metalness:0.9, roughness:0.1,
+  emissive:0xc9a96e, emissiveIntensity:0.2
+});
+
+// ---- BUILD THE "BUST" (procedurally) ----
+const bustGroup = new THREE.Group();
+scene.add(bustGroup);
+
+// === HEAD (ellipsoid-ish using scaled sphere) ===
+const headGeo = new THREE.SphereGeometry(3.5, 32, 32);
+const head = new THREE.Mesh(headGeo, marbleMat);
+head.scale.set(0.85, 1.0, 0.82);
+head.position.set(0, 2.5, 0);
+head.castShadow=true;
+bustGroup.add(head);
+
+// === NECK ===
+const neckGeo = new THREE.CylinderGeometry(1.1, 1.4, 2.2, 20);
+const neck = new THREE.Mesh(neckGeo, marbleMat);
+neck.position.set(0, -1.0, 0);
+neck.castShadow=true;
+bustGroup.add(neck);
+
+// === SHOULDERS / CHEST (simplified torso bust) ===
+const chestGeo = new THREE.SphereGeometry(4.5, 32, 16);
+const chest = new THREE.Mesh(chestGeo, marbleMat);
+chest.scale.set(1.0, 0.55, 0.65);
+chest.position.set(0, -3.8, 0);
+chest.castShadow=true;
+bustGroup.add(chest);
+
+// === BASE / PEDESTAL ===
+const baseGeo = new THREE.CylinderGeometry(2.2, 2.8, 1.2, 16);
+const baseMesh = new THREE.Mesh(baseGeo, marbleMat);
+baseMesh.position.set(0, -6.8, 0);
+bustGroup.add(baseMesh);
+const base2Geo = new THREE.BoxGeometry(5.5, 0.5, 4.0);
+const base2 = new THREE.Mesh(base2Geo, marbleMat);
+base2.position.set(0, -7.6, 0);
+bustGroup.add(base2);
+
+// === FACIAL FEATURES (very simplified) ===
+// Nose
+const noseGeo = new THREE.ConeGeometry(0.18, 0.55, 8);
+const nose = new THREE.Mesh(noseGeo, marbleMat);
+nose.rotation.x = Math.PI/2 + 0.3;
+nose.position.set(0, 2.5, 3.2);
+bustGroup.add(nose);
+
+// Brow ridge
+const browGeo = new THREE.TorusGeometry(1.4, 0.12, 8, 20, Math.PI);
+const brow = new THREE.Mesh(browGeo, marbleMat);
+brow.rotation.x = Math.PI*0.1;
+brow.position.set(0, 3.8, 2.8);
+bustGroup.add(brow);
+
+// Eye sockets (dark recesses — spheres pushed in)
+const eyeGeo = new THREE.SphereGeometry(0.35, 12, 12);
+const eyeMatDark = new THREE.MeshStandardMaterial({color:0xc8c0b4,roughness:.8,metalness:0});
+[-0.9,0.9].forEach(x=>{
+  const e = new THREE.Mesh(eyeGeo, eyeMatDark);
+  e.position.set(x, 2.9, 3.0);
+  bustGroup.add(e);
+});
+
+// === CRACK LINES — using thin boxes arranged radially ===
+const crackMat = goldMat;
+function addCrack(x,y,z,rx,ry,rz,w,h,d){
+  const g = new THREE.BoxGeometry(w,h,d);
+  const m = new THREE.Mesh(g, crackMat);
+  m.position.set(x,y,z);
+  m.rotation.set(rx,ry,rz);
+  bustGroup.add(m);
+}
+// Major cracks on the forehead/face radiating outward like in the video
+addCrack(0, 4.5, 2.8,   0.3, 0, 0.1,   0.04, 2.5, 0.04);
+addCrack(0.8, 3.5, 3.0, 0.2, 0,-0.4,   0.04, 1.8, 0.04);
+addCrack(-0.7, 3.8, 2.9,0.1, 0, 0.5,   0.04, 1.6, 0.04);
+addCrack(1.5, 2.8, 2.5, 0.1,-.3, 0.8,  0.04, 2.0, 0.04);
+addCrack(-1.6, 3.0, 2.4,0.0, 0.3,-0.7, 0.04, 1.8, 0.04);
+addCrack(0.3, 2.0, 3.2, 0.5, 0, 0.2,   0.04, 1.4, 0.04);
+addCrack(-0.4, 1.5, 3.1,0.4, 0,-0.3,   0.04, 1.2, 0.04);
+addCrack(2.0, 1.5, 1.8, 0.0,-.5, 1.0,  0.04, 2.2, 0.04);
+addCrack(-2.0, 2.0, 1.5,0.0, 0.5,-1.0, 0.04, 2.0, 0.04);
+addCrack(0.5, 5.0, 1.5, 0.8, 0, 0.3,   0.04, 1.6, 0.04);
+addCrack(-0.6, 4.8, 1.6,0.7, 0,-0.4,   0.04, 1.4, 0.04);
+// Smaller secondary cracks
+for(let i=0;i<18;i++){
+  const a=Math.random()*Math.PI*2;
+  addCrack(
+    Math.sin(a)*2.5, 1+Math.random()*4, Math.cos(a)*2,
+    Math.random()*.8, Math.random()*.8, Math.random()*.8,
+    0.025, 0.5+Math.random()*1.0, 0.025
+  );
+}
+
+// === GLOWING CORE SPHERE (like blue orb in video but gold) ===
+const coreGeo = new THREE.SphereGeometry(1.0, 32, 32);
+const coreMesh = new THREE.Mesh(coreGeo, glowMat);
+coreMesh.position.set(0, 2.8, 0);
+bustGroup.add(coreMesh);
+
+// Outer corona
+const coronaGeo = new THREE.SphereGeometry(1.6, 32, 32);
+const coronaMat = new THREE.MeshStandardMaterial({
+  color:0xffe080, metalness:0, roughness:0,
+  emissive:0xffd040, emissiveIntensity:1.5,
+  transparent:true, opacity:0.15, side:THREE.BackSide
+});
+const corona = new THREE.Mesh(coronaGeo, coronaMat);
+corona.position.set(0, 2.8, 0);
+bustGroup.add(corona);
+
+// === FLOATING DEBRIS CHUNKS ===
+const debrisGroup = new THREE.Group();
+scene.add(debrisGroup);
+
+const chunkGeos = [
+  new THREE.TetrahedronGeometry(1),
+  new THREE.OctahedronGeometry(.8),
+  new THREE.DodecahedronGeometry(.6),
+  new THREE.BoxGeometry(.8,.4,.3),
+  new THREE.BoxGeometry(.5,.8,.25),
+];
+
+const debris=[];
+for(let i=0;i<55;i++){
+  const isGold = i%5===0;
+  const geo = chunkGeos[i%chunkGeos.length];
+  const mat = isGold ? debrisGoldMat : debrisMat;
+  const m = new THREE.Mesh(geo, mat);
+  // Scattered around the bust
+  const r = 6+Math.random()*14;
+  const theta = Math.random()*Math.PI*2;
+  const phi = (Math.random()-.2)*Math.PI*.7;
+  m.position.set(
+    r*Math.sin(phi)*Math.cos(theta),
+    (Math.random()-0.3)*12,
+    r*Math.sin(phi)*Math.sin(theta)
+  );
+  m.rotation.set(Math.random()*Math.PI*2,Math.random()*Math.PI*2,Math.random()*Math.PI*2);
+  const s = 0.15+Math.random()*0.55;
+  m.scale.setScalar(s);
+  m.userData={
+    floatAmp:0.3+Math.random()*1.2,
+    floatSpeed:0.2+Math.random()*0.6,
+    rotX:(.01+Math.random()*.02)*(Math.random()>.5?1:-1),
+    rotY:(.01+Math.random()*.02)*(Math.random()>.5?1:-1),
+    phase:Math.random()*Math.PI*2,
+    initY:m.position.y,
+    r,theta,phi,
+    orbitSpeed:(.003+Math.random()*.005)*(Math.random()>.5?1:-1),
+    orbitAngle:theta
+  };
+  debrisGroup.add(m);
+  debris.push(m);
+}
+
+// === GOLD DUST PARTICLES ===
+const dustCount=4000;
+const dustPos=new Float32Array(dustCount*3);
+const dustCol=new Float32Array(dustCount*3);
+for(let i=0;i<dustCount;i++){
+  const r=5+Math.random()*45;
+  const t=Math.random()*Math.PI*2;
+  const p=Math.acos(Math.random()*2-1);
+  dustPos[i*3]  =r*Math.sin(p)*Math.cos(t);
+  dustPos[i*3+1]=r*Math.sin(p)*Math.sin(t);
+  dustPos[i*3+2]=r*Math.cos(p);
+  // warm gold-white gradient
+  const mix=Math.random();
+  dustCol[i*3]  =0.9+mix*.1;
+  dustCol[i*3+1]=0.75+mix*.2;
+  dustCol[i*3+2]=0.3+mix*.15;
+}
+const dustGeo=new THREE.BufferGeometry();
+dustGeo.setAttribute('position',new THREE.BufferAttribute(dustPos,3));
+dustGeo.setAttribute('color',new THREE.BufferAttribute(dustCol,3));
+const dustMat=new THREE.PointsMaterial({size:.08,vertexColors:true,transparent:true,opacity:.6});
+const dust=new THREE.Points(dustGeo,dustMat);
+scene.add(dust);
+
+// === ORBIT RINGS (like the video's floating rings) ===
+function makeOrbitRing(radius, tube, col, rx,ry,rz){
+  const geo=new THREE.TorusGeometry(radius,tube,12,80);
+  const mat=new THREE.MeshStandardMaterial({color:col,metalness:.95,roughness:.05,emissive:col,emissiveIntensity:.15});
+  const m=new THREE.Mesh(geo,mat);
+  m.rotation.set(rx,ry,rz);
+  bustGroup.add(m);
+  return m;
+}
+const ring1=makeOrbitRing(7,.03,0xc9a96e, Math.PI/2,0,0);
+const ring2=makeOrbitRing(8,.025,0xe8d5a3, Math.PI/3,Math.PI/4,0);
+const ring3=makeOrbitRing(9,.02,0xa07840, Math.PI/6,Math.PI/2,Math.PI/5);
+
+// === GROUND / GRID PLANE ===
+const planeGeo=new THREE.PlaneGeometry(200,200,30,30);
+const planeMat=new THREE.MeshStandardMaterial({color:0xe8e4da,roughness:.9,metalness:0,transparent:true,opacity:.5});
+const plane=new THREE.Mesh(planeGeo,planeMat);
+plane.rotation.x=-Math.PI/2;
+plane.position.y=-9;
+plane.receiveShadow=true;
+scene.add(plane);
+
+// ---- MOUSE & SCROLL ----
+let mouseX=0,mouseY=0,tX=0,tY=0;
+document.addEventListener('mousemove',e=>{
+  mouseX=(e.clientX/window.innerWidth-.5)*2;
+  mouseY=-(e.clientY/window.innerHeight-.5)*2;
+});
+let scrollY=0;
+window.addEventListener('scroll',()=>scrollY=window.scrollY);
+
+// ---- ANIMATE ----
+const clock=new THREE.Clock();
+function animate(){
+  requestAnimationFrame(animate);
+  const t=clock.getElapsedTime();
+
+  tX+=(mouseX-tX)*.04;
+  tY+=(mouseY-tY)*.04;
+
+  // Bust follows mouse — subtle
+  bustGroup.rotation.y = tX*0.4 + t*0.05;
+  bustGroup.rotation.x = tY*0.2;
+
+  // Rings orbit
+  ring1.rotation.z+=.004;
+  ring2.rotation.x+=.003;
+  ring3.rotation.y+=.005;
+
+  // Glow pulse
+  const pulse=1+Math.sin(t*1.5)*0.12;
+  coreMesh.scale.setScalar(pulse);
+  corona.scale.setScalar(pulse*1.1);
+  coreGlow.intensity=6+Math.sin(t*1.5)*3;
+  coreGlow.color.setHSL(.1, .8, .5+Math.sin(t*.8)*.15);
+
+  // Debris orbit + float
+  debris.forEach(d=>{
+    d.userData.orbitAngle+=d.userData.orbitSpeed;
+    const a=d.userData.orbitAngle;
+    const r=d.userData.r;
+    d.position.x=r*Math.cos(a);
+    d.position.z=r*Math.sin(a)*.6;
+    d.position.y=d.userData.initY+Math.sin(t*d.userData.floatSpeed+d.userData.phase)*d.userData.floatAmp;
+    d.rotation.x+=d.userData.rotX;
+    d.rotation.y+=d.userData.rotY;
+  });
+
+  // Dust slowly rotates
+  dust.rotation.y=t*.015;
+  dust.rotation.x=t*.008;
+
+  // Camera scroll parallax
+  camera.position.y=2-scrollY*.018;
+  camera.position.z=28-scrollY*.012;
+  camera.lookAt(0,-scrollY*.005,0);
+
+  // Lights breathe
+  sunLight.position.x=8+Math.sin(t*.3)*4;
+  fillLight.intensity=1.3+Math.sin(t*.7)*.4;
+
+  renderer.render(scene,camera);
+}
+animate();
+
+window.addEventListener('resize',()=>{
+  const w=window.innerWidth,h=window.innerHeight;
+  camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);
+});
+
+// ---- SCROLL REVEAL ----
+const revEls=document.querySelectorAll('.reveal');
+new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'),i*120);
+  });
+},{threshold:.1}).observe=function(el){IntersectionObserver.prototype.observe.call(this,el)};
+// Fix: re-create properly
+const io2=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:.12});
+revEls.forEach(r=>io2.observe(r));
+
+// ---- INFO CARD auto-cycle ----
+const cards=[
+  {tag:'01 — AI Automation',title:'AI-Powered Automation',desc:'End-to-end systems that eliminate repetitive tasks and scale effortlessly.',num:'10x',numLabel:'Efficiency Gain'},
+  {tag:'02 — 3D Web',title:'Premium 3D Experiences',desc:'Cinematic interfaces that scroll-bind users and set your brand apart.',num:'3x',numLabel:'Engagement Rate'},
+  {tag:'03 — Backend',title:'Robust Architecture',desc:'Auto-scaling, secure backend systems designed for absolute performance.',num:'99.9%',numLabel:'Uptime SLA'},
+];
+let cardIdx=0;
+const card=document.getElementById('infoCard');
+setTimeout(()=>card.classList.add('show'), 2500);
+setInterval(()=>{
+  card.classList.remove('show');
+  setTimeout(()=>{
+    cardIdx=(cardIdx+1)%cards.length;
+    const c=cards[cardIdx];
+    card.querySelector('.info-card-tag').textContent=c.tag;
+    card.querySelector('.info-card-title').textContent=c.title;
+    card.querySelector('.info-card-desc').textContent=c.desc;
+    card.querySelector('.info-card-num').innerHTML=c.num;
+    card.querySelector('.info-card-num-label').textContent=c.numLabel;
+    card.classList.add('show');
+  },500);
+},4000);
+
+// ---- LOADER ----
+setTimeout(()=>document.getElementById('loader').classList.add('gone'),2000);
+</script>
+</body>
+</html>

@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dayoub | مطعم دايوب الفاخر</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g1:#c9a84c;--g2:#e8c96b;--g3:#8b6914;--g4:#f5e1a0;
+  --bk:#050505;--dk:#0d0d0d;--card:rgba(12,10,4,.9);
+  --tx:#f2eada;--txd:rgba(242,234,218,.55);
+  --gb:rgba(201,168,76,.08);--gbl:rgba(201,168,76,.18);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bk);color:var(--tx);font-family:'Tajawal',sans-serif;overflow-x:hidden;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--dk);}
+::-webkit-scrollbar-thumb{background:var(--g3);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:var(--g1);}
+
+/* CURSOR */
+.cur{position:fixed;width:38px;height:38px;border:1px solid var(--g1);border-radius:50%;pointer-events:none;z-index:9997;transform:translate(-50%,-50%);transition:width .3s,height .3s,background .3s,border-color .3s;top:-100px;left:-100px;}
+.cur-dot{position:fixed;width:5px;height:5px;background:var(--g1);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);top:-100px;left:-100px;}
+.cur.big{width:56px;height:56px;background:rgba(201,168,76,.06);border-color:rgba(201,168,76,.4);}
+@media(hover:hover){*{cursor:none!important;}}
+
+/* LOADER */
+#ldr{position:fixed;inset:0;background:var(--bk);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;transition:opacity .6s;}
+#ldr.off{opacity:0;pointer-events:none;}
+.ldr-logo{font-family:'Cinzel',serif;font-size:clamp(2rem,6vw,4rem);letter-spacing:10px;background:linear-gradient(90deg,var(--g3),var(--g2),var(--g1),var(--g2),var(--g3));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 1.8s linear infinite;}
+.ldr-bar{width:220px;height:2px;background:rgba(201,168,76,.15);border-radius:1px;overflow:hidden;}
+.ldr-prog{height:100%;background:linear-gradient(90deg,var(--g3),var(--g1),var(--g2));animation:lprog 2.2s ease forwards;}
+@keyframes lprog{from{width:0}to{width:100%}}
+@keyframes shimmer{to{background-position:-200% center}}
+
+/* NAV */
+nav{position:fixed;top:0;inset-inline:0;z-index:1000;padding:1.2rem 3rem;display:flex;align-items:center;justify-content:space-between;transition:all .4s;}
+nav.stk{background:rgba(5,5,5,.96);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--gbl);padding:.8rem 3rem;}
+.nlg{font-family:'Cinzel',serif;font-size:1.9rem;font-weight:700;color:var(--g1);letter-spacing:4px;text-decoration:none;text-shadow:0 0 28px rgba(201,168,76,.35);transition:text-shadow .3s;}
+.nlg:hover{text-shadow:0 0 50px rgba(201,168,76,.7);}
+.nls{display:flex;gap:1.8rem;list-style:none;}
+.nls a{color:var(--txd);text-decoration:none;font-size:.9rem;font-weight:500;letter-spacing:.5px;transition:all .3s;position:relative;}
+.nls a::after{content:'';position:absolute;bottom:-3px;right:0;width:0;height:1px;background:var(--g1);transition:width .3s;}
+.nls a:hover{color:var(--g1);}
+.nls a:hover::after{width:100%;}
+.ncta{background:linear-gradient(135deg,var(--g1),var(--g3))!important;color:#000!important;padding:.5rem 1.4rem;font-weight:700!important;}
+.ncta::after{display:none!important;}
+.hbg{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+.hbg span{width:24px;height:2px;background:var(--g1);transition:all .3s;display:block;}
+
+/* MOBILE NAV */
+.mnav{position:fixed;top:0;right:0;width:260px;height:100vh;background:rgba(5,5,5,.98);backdrop-filter:blur(20px);border-left:1px solid var(--gbl);z-index:2000;display:flex;flex-direction:column;padding:5rem 2rem 2rem;gap:.8rem;transform:translateX(110%);transition:transform .4s ease;}
+.mnav.open{transform:translateX(0);}
+.mnav a{color:var(--txd);text-decoration:none;font-size:1rem;padding:.7rem 0;border-bottom:1px solid rgba(201,168,76,.08);transition:color .3s;}
+.mnav a:hover{color:var(--g1);}
+.mclose{position:absolute;top:1.5rem;left:1.5rem;background:transparent;border:none;color:var(--g1);font-size:1.5rem;cursor:pointer;line-height:1;}
+.overlay-mob{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1999;}
+.overlay-mob.show{display:block;}
+
+/* HERO */
+#hero{position:relative;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+#hcv{position:absolute;inset:0;z-index:0;}
+.hero-ovl{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(5,5,5,.25),rgba(5,5,5,.75));z-index:1;}
+.hero-c{position:relative;z-index:2;text-align:center;max-width:920px;padding:2rem;}
+.hbadge{display:inline-block;border:1px solid rgba(201,168,76,.5);color:var(--g1);font-size:.72rem;letter-spacing:6px;padding:.4rem 1.8rem;margin-bottom:2rem;animation:fdu 1s ease both;}
+.htitle{font-family:'Cinzel',serif;font-size:clamp(3.5rem,10vw,8rem);font-weight:700;line-height:1;margin-bottom:1.2rem;animation:fdup .9s ease .2s both;}
+.htitle span{display:block;background:linear-gradient(135deg,var(--g4),var(--g1),var(--g3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 30px rgba(201,168,76,.3));}
+.hsubt{font-size:clamp(.95rem,2vw,1.3rem);color:var(--txd);margin-bottom:3rem;line-height:1.9;animation:fdup .9s ease .4s both;max-width:600px;margin-inline:auto;}
+.hact{display:flex;gap:1.5rem;justify-content:center;animation:fdup .9s ease .6s both;flex-wrap:wrap;}
+.btn-p{background:linear-gradient(135deg,var(--g1),var(--g3));color:#000;padding:.9rem 2.5rem;font-size:.95rem;font-weight:700;font-family:'Tajawal',sans-serif;border:none;cursor:pointer;letter-spacing:1.5px;text-decoration:none;display:inline-block;transition:all .35s;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);}
+.btn-p:hover{box-shadow:0 12px 35px rgba(201,168,76,.45);transform:translateY(-4px);}
+.btn-o{border:1px solid var(--g1);color:var(--g1);padding:.9rem 2.5rem;font-size:.95rem;font-weight:500;font-family:'Tajawal',sans-serif;background:transparent;cursor:pointer;letter-spacing:1.5px;text-decoration:none;display:inline-block;transition:all .35s;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);}
+.btn-o:hover{background:rgba(201,168,76,.08);box-shadow:0 0 25px rgba(201,168,76,.2);transform:translateY(-4px);}
+.scrl{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:.5rem;animation:fdup 1s ease 1.2s both;}
+.scrl-d{width:5px;height:5px;border-radius:50%;background:var(--g1);animation:bnc 1.6s infinite;}
+.scrl-t{font-size:.65rem;letter-spacing:4px;color:var(--txd);text-transform:uppercase;}
+
+/* SLIDER */
+#sldr{position:relative;height:68vh;overflow:hidden;background:var(--dk);}
+.sldr-w{width:100%;height:100%;overflow:hidden;direction:ltr;}
+.sldr-t{display:flex;height:100%;will-change:transform;}
+.sld{min-width:100%;height:100%;position:relative;flex-shrink:0;}
+.sld img{width:100%;height:100%;object-fit:cover;display:block;}
+.sld-ovl{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,5,5,.85) 0%,rgba(5,5,5,.15) 55%,rgba(5,5,5,.3) 100%);display:flex;align-items:flex-end;padding:3rem 4rem;direction:rtl;}
+.sld-c{max-width:550px;}
+.sld-lb{display:inline-block;background:var(--g1);color:#000;font-size:.7rem;font-weight:700;letter-spacing:3px;padding:.3rem .9rem;margin-bottom:.8rem;text-transform:uppercase;}
+.sld-ttl{font-size:clamp(1.5rem,4vw,2.8rem);font-weight:900;line-height:1.2;margin-bottom:.5rem;}
+.sld-dsc{color:var(--txd);font-size:.95rem;line-height:1.7;}
+.sdots{position:absolute;bottom:1.8rem;left:50%;transform:translateX(-50%);display:flex;gap:.5rem;z-index:10;}
+.sdot{width:7px;height:7px;border-radius:50%;background:rgba(201,168,76,.3);cursor:pointer;transition:all .3s;}
+.sdot.on{background:var(--g1);width:22px;border-radius:4px;}
+.snav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(5,5,5,.55);backdrop-filter:blur(10px);border:1px solid var(--gbl);color:var(--g1);width:48px;height:48px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;transition:all .3s;font-size:1.3rem;}
+.snav:hover{background:var(--g1);color:#000;}
+.spv{left:1.5rem;}.snx{right:1.5rem;}
+
+/* STATS */
+#stats{padding:3.5rem 3rem;background:linear-gradient(135deg,rgba(201,168,76,.04),rgba(201,168,76,.01));border-block:1px solid var(--gbl);}
+.stats-g{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;max-width:1200px;margin:0 auto;text-align:center;}
+.stat{padding:1.5rem;position:relative;}
+.stat::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:35px;height:2px;background:var(--g1);}
+.snum{font-family:'Cinzel',serif;font-size:2.8rem;font-weight:700;color:var(--g1);line-height:1;margin-bottom:.4rem;}
+.slbl{color:var(--txd);font-size:.85rem;letter-spacing:2px;}
+
+/* SEC HEADER */
+.sec-h{text-align:center;margin-bottom:4rem;}
+.sec-bg{display:inline-block;color:var(--g1);font-size:.7rem;letter-spacing:6px;text-transform:uppercase;margin-bottom:.8rem;}
+.sec-bg::before,.sec-bg::after{content:'—';margin:0 .5rem;opacity:.4;}
+.sec-t{font-size:clamp(1.8rem,4.5vw,3.2rem);font-weight:900;line-height:1.2;margin-bottom:.8rem;}
+.sec-t em{font-style:normal;color:var(--g1);}
+.sec-d{color:var(--txd);max-width:580px;margin:0 auto;line-height:1.9;font-size:.95rem;}
+
+/* SERVICES */
+#svc{padding:6rem 3rem;background:var(--dk);position:relative;overflow:hidden;}
+#svc::before{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(201,168,76,.04) 0%,transparent 70%);pointer-events:none;}
+.svc-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;max-width:1200px;margin:0 auto;}
+.svc-c{background:var(--gb);border:1px solid var(--gbl);padding:2.8rem 2rem;text-align:center;position:relative;overflow:hidden;transition:all .4s;}
+.svc-c::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,.1),transparent);opacity:0;transition:opacity .4s;}
+.svc-c:hover{border-color:var(--g1);transform:translateY(-12px);box-shadow:0 25px 50px rgba(0,0,0,.45),0 0 40px rgba(201,168,76,.08);}
+.svc-c:hover::before{opacity:1;}
+.svc-ic{font-size:3rem;margin-bottom:1.5rem;display:block;filter:drop-shadow(0 0 12px rgba(201,168,76,.45));}
+.svc-t{font-size:1.2rem;font-weight:700;margin-bottom:.8rem;}
+.svc-d{color:var(--txd);line-height:1.8;font-size:.9rem;}
+
+/* MENU */
+#menu{padding:6rem 3rem;position:relative;}
+.menu-tabs{display:inline-flex;border:1px solid var(--gbl);position:relative;left:50%;transform:translateX(-50%);margin-bottom:4rem;overflow:hidden;}
+.mtab{padding:.85rem 2.2rem;font-size:.85rem;font-family:'Tajawal',sans-serif;font-weight:600;letter-spacing:2px;background:transparent;border:none;color:var(--txd);cursor:pointer;transition:all .3s;white-space:nowrap;}
+.mtab.on{color:#000;background:linear-gradient(135deg,var(--g1),var(--g3));}
+.mtab:not(.on):hover{color:var(--g1);background:rgba(201,168,76,.05);}
+.mpan{display:none;animation:fdi .4s ease;}
+.mpan.on{display:block;}
+.menu-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;max-width:1320px;margin:0 auto;}
+
+/* PRODUCT CARD */
+.prd{background:var(--card);border:1px solid var(--gbl);overflow:hidden;position:relative;transition:all .4s cubic-bezier(.25,.46,.45,.94);}
+.prd::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,.07),transparent);opacity:0;transition:opacity .4s;pointer-events:none;}
+.prd:hover{border-color:rgba(201,168,76,.5);transform:translateY(-14px) rotateX(1.5deg);box-shadow:0 30px 60px rgba(0,0,0,.55),0 0 50px rgba(201,168,76,.08),inset 0 1px 0 rgba(201,168,76,.25);}
+.prd:hover::after{opacity:1;}
+.prd-img{position:relative;height:215px;overflow:hidden;}
+.prd-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;display:block;}
+.prd:hover .prd-img img{transform:scale(1.12);}
+.prd-bdg{position:absolute;top:.9rem;right:.9rem;background:var(--g1);color:#000;font-size:.65rem;font-weight:700;padding:.22rem .7rem;letter-spacing:1px;}
+.prd-grd{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,5,5,.7),transparent 55%);}
+.prd-b{padding:1.4rem;}
+.prd-n{font-size:1.05rem;font-weight:700;margin-bottom:.4rem;}
+.prd-d{color:var(--txd);font-size:.82rem;line-height:1.7;margin-bottom:1rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.prd-f{display:flex;align-items:center;justify-content:space-between;padding-top:.9rem;border-top:1px solid var(--gbl);}
+.stars{color:var(--g1);font-size:.9rem;}
+.rnum{color:var(--txd);font-size:.75rem;margin-right:.3rem;}
+.prd-p{font-family:'Cinzel',serif;font-size:1rem;color:var(--g1);font-weight:700;}
+.prd-p small{font-family:'Tajawal',sans-serif;font-size:.65rem;color:var(--txd);}
+
+/* ABOUT */
+#about{padding:6rem 3rem;background:var(--dk);position:relative;overflow:hidden;}
+.about-g{display:grid;grid-template-columns:1fr 1fr;gap:5rem;max-width:1200px;margin:0 auto;align-items:center;}
+.about-visual{position:relative;height:500px;}
+.about-img{width:100%;height:100%;object-fit:cover;border:1px solid var(--gbl);}
+.about-accent{position:absolute;bottom:-20px;right:-20px;width:180px;height:180px;border:2px solid var(--g3);z-index:-1;}
+.about-year{position:absolute;top:-20px;left:-20px;background:linear-gradient(135deg,var(--g1),var(--g3));color:#000;padding:1.5rem;font-family:'Cinzel',serif;font-size:1.5rem;font-weight:700;line-height:1;text-align:center;}
+.about-year small{display:block;font-size:.65rem;letter-spacing:3px;margin-top:.2rem;font-family:'Tajawal',sans-serif;}
+.about-txt h2{font-size:clamp(2rem,3vw,2.8rem);font-weight:900;line-height:1.2;margin-bottom:1.5rem;}
+.about-txt h2 em{font-style:normal;color:var(--g1);}
+.about-txt p{color:var(--txd);line-height:1.9;font-size:.95rem;margin-bottom:1.5rem;}
+.about-list{list-style:none;display:flex;flex-direction:column;gap:.7rem;margin-bottom:2rem;}
+.about-list li{display:flex;align-items:center;gap:.8rem;color:var(--txd);font-size:.9rem;}
+.about-list li::before{content:'◈';color:var(--g1);font-size:.8rem;}
+
+/* TESTIMONIALS */
+#tstm{padding:5rem 3rem;position:relative;}
+.tstm-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;max-width:1200px;margin:0 auto;}
+.tstm-c{background:var(--gb);border:1px solid var(--gbl);padding:2rem;position:relative;transition:all .4s;}
+.tstm-c:hover{border-color:rgba(201,168,76,.4);transform:translateY(-8px);}
+.tstm-q{font-size:4rem;color:var(--g1);line-height:1;margin-bottom:.5rem;opacity:.4;font-family:'Cinzel',serif;}
+.tstm-t{color:var(--txd);line-height:1.8;font-size:.9rem;margin-bottom:1.5rem;}
+.tstm-au{display:flex;align-items:center;gap:1rem;}
+.tstm-av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--g1),var(--g3));display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;color:#000;flex-shrink:0;}
+.tstm-nm{font-weight:700;font-size:.9rem;}
+.tstm-rl{color:var(--txd);font-size:.75rem;}
+.tstm-st{color:var(--g1);font-size:.8rem;margin-bottom:.3rem;}
+
+/* CONTACT */
+#cntc{padding:6rem 3rem;background:var(--dk);position:relative;overflow:hidden;}
+#cntc::before{content:'';position:absolute;bottom:-200px;left:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(201,168,76,.05),transparent 70%);pointer-events:none;}
+.cntc-g{display:grid;grid-template-columns:1fr 1fr;gap:4rem;max-width:1200px;margin:0 auto;align-items:start;}
+.cntc-info{display:flex;flex-direction:column;gap:1.5rem;}
+.cntc-it{display:flex;align-items:flex-start;gap:1.5rem;padding:1.4rem;border:1px solid var(--gbl);transition:all .3s;}
+.cntc-it:hover{border-color:rgba(201,168,76,.4);background:var(--gb);}
+.cntc-ic{font-size:1.4rem;color:var(--g1);width:38px;text-align:center;flex-shrink:0;margin-top:.1rem;}
+.cntc-ct h4{font-size:.95rem;font-weight:700;margin-bottom:.3rem;}
+.cntc-ct p{color:var(--txd);font-size:.85rem;line-height:1.6;}
+.wa-btn{display:flex;align-items:center;justify-content:center;gap:.8rem;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;padding:1.1rem 2rem;font-size:1rem;font-family:'Tajawal',sans-serif;font-weight:700;border:none;cursor:pointer;text-decoration:none;transition:all .3s;letter-spacing:1px;margin-top:.5rem;}
+.wa-btn:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(37,211,102,.35);}
+.wa-btn svg{flex-shrink:0;}
+.cntc-form{display:flex;flex-direction:column;gap:1rem;}
+.fg input,.fg textarea{width:100%;background:rgba(201,168,76,.025);border:1px solid var(--gbl);color:var(--tx);padding:.9rem 1.1rem;font-size:.88rem;font-family:'Tajawal',sans-serif;outline:none;transition:all .3s;direction:rtl;}
+.fg textarea{height:120px;resize:none;}
+.fg input:focus,.fg textarea:focus{border-color:var(--g1);background:rgba(201,168,76,.04);box-shadow:0 0 20px rgba(201,168,76,.08);}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--txd);}
+
+/* FOOTER */
+footer{background:#000;padding:4rem 3rem 2rem;border-top:1px solid var(--gbl);}
+.ft-g{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;max-width:1200px;margin:0 auto 3rem;}
+.ft-b h3{font-family:'Cinzel',serif;font-size:1.9rem;color:var(--g1);margin-bottom:1rem;letter-spacing:4px;}
+.ft-b p{color:var(--txd);line-height:1.8;font-size:.88rem;max-width:330px;}
+.ft-b .socials{display:flex;gap:.8rem;margin-top:1.5rem;}
+.socials a{width:36px;height:36px;border:1px solid var(--gbl);display:flex;align-items:center;justify-content:center;color:var(--txd);font-size:.85rem;text-decoration:none;transition:all .3s;}
+.socials a:hover{border-color:var(--g1);color:var(--g1);}
+.ft-c h4{font-size:.8rem;letter-spacing:3px;color:var(--g1);margin-bottom:1.4rem;text-transform:uppercase;}
+.ft-c ul{list-style:none;display:flex;flex-direction:column;gap:.7rem;}
+.ft-c ul a{color:var(--txd);text-decoration:none;font-size:.88rem;transition:all .3s;}
+.ft-c ul a:hover{color:var(--g1);padding-right:6px;}
+.ft-bot{max-width:1200px;margin:0 auto;padding-top:2rem;border-top:1px solid rgba(201,168,76,.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.ft-bot p{color:var(--txd);font-size:.75rem;letter-spacing:.5px;}
+.adm-tg{color:rgba(201,168,76,.12);font-size:.7rem;cursor:pointer;letter-spacing:2px;transition:color .3s;background:transparent;border:none;font-family:'Tajawal',sans-serif;}
+.adm-tg:hover{color:var(--g1);}
+
+/* FLOAT WA */
+.fwa{position:fixed;bottom:2rem;left:2rem;background:#25D366;color:#fff;width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;z-index:500;text-decoration:none;box-shadow:0 5px 20px rgba(37,211,102,.4);transition:all .3s;animation:pgld 2.5s infinite;}
+.fwa:hover{transform:scale(1.1);box-shadow:0 10px 35px rgba(37,211,102,.6);}
+@keyframes pgld{0%,100%{box-shadow:0 5px 20px rgba(37,211,102,.4)}50%{box-shadow:0 5px 35px rgba(37,211,102,.7)}}
+
+/* LOGIN MODAL */
+#lgn{display:none;position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:99999;align-items:center;justify-content:center;backdrop-filter:blur(12px);}
+#lgn.on{display:flex;}
+.lgn-bx{background:#0a0a0a;border:1px solid var(--gbl);padding:3rem;max-width:380px;width:90%;text-align:center;}
+.lgn-bx h3{font-family:'Cinzel',serif;color:var(--g1);font-size:1.4rem;margin-bottom:.5rem;letter-spacing:3px;}
+.lgn-bx p{color:var(--txd);margin-bottom:2rem;font-size:.85rem;}
+.lgn-err{color:#e74c3c;font-size:.78rem;margin-top:.5rem;display:none;}
+
+/* ADMIN PANEL */
+#adm{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;backdrop-filter:blur(10px);overflow-y:auto;}
+#adm.on{display:block;}
+#adm-p{max-width:1150px;margin:1.5rem auto;background:#0a0a0a;border:1px solid var(--gbl);min-height:calc(100vh - 3rem);}
+.adm-h{padding:1.4rem 2rem;border-bottom:1px solid var(--gbl);display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,rgba(201,168,76,.04),transparent);}
+.adm-h h2{font-family:'Cinzel',serif;color:var(--g1);font-size:1.2rem;letter-spacing:3px;}
+.adm-cls{background:transparent;border:1px solid var(--gbl);color:var(--txd);width:34px;height:34px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all .3s;}
+.adm-cls:hover{border-color:var(--g1);color:var(--g1);}
+.adm-bd{display:grid;grid-template-columns:190px 1fr;}
+.adm-sb{border-left:1px solid var(--gbl);padding:1.5rem 0;}
+.adm-ni{padding:.75rem 1.4rem;color:var(--txd);cursor:pointer;font-size:.85rem;transition:all .3s;border-right:3px solid transparent;display:flex;align-items:center;gap:.6rem;direction:rtl;white-space:nowrap;}
+.adm-ni:hover,.adm-ni.on{color:var(--g1);background:rgba(201,168,76,.04);border-right-color:var(--g1);}
+.adm-ct{padding:2rem;overflow-y:auto;max-height:calc(100vh - 120px);}
+.adm-sc{display:none;}
+.adm-sc.on{display:block;}
+.adm-sc>h3{font-size:1rem;color:var(--g1);margin-bottom:1.5rem;padding-bottom:.5rem;border-bottom:1px solid var(--gbl);}
+.af-g{margin-bottom:1.1rem;}
+.af-g label{display:block;font-size:.72rem;color:var(--txd);letter-spacing:2px;margin-bottom:.4rem;text-transform:uppercase;}
+.ai,.at,.as{width:100%;background:rgba(201,168,76,.025);border:1px solid var(--gbl);color:var(--tx);padding:.65rem 1rem;font-size:.85rem;font-family:'Tajawal',sans-serif;outline:none;transition:border-color .3s;direction:rtl;}
+.at{height:75px;resize:vertical;}
+.as option{background:#0a0a0a;}
+.ai:focus,.at:focus,.as:focus{border-color:var(--g1);}
+.af-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.ab{background:linear-gradient(135deg,var(--g1),var(--g3));color:#000;padding:.6rem 1.5rem;font-size:.82rem;font-family:'Tajawal',sans-serif;font-weight:700;border:none;cursor:pointer;letter-spacing:1px;transition:all .3s;}
+.ab:hover{box-shadow:0 6px 18px rgba(201,168,76,.3);transform:translateY(-2px);}
+.ab-sec{background:transparent;border:1px solid var(--gbl);color:var(--txd);}
+.ab-sec:hover{border-color:var(--g1);color:var(--g1);box-shadow:none;}
+.ab-dn{background:linear-gradient(135deg,#c0392b,#922b21);color:#fff;}
+.ab-dn:hover{box-shadow:0 6px 18px rgba(192,57,43,.3);}
+.adm-lst{display:flex;flex-direction:column;gap:.9rem;margin-top:1.5rem;}
+.adm-pi{padding:.9rem;border:1px solid var(--gbl);display:grid;grid-template-columns:55px 1fr auto;gap:.9rem;align-items:center;transition:border-color .3s;}
+.adm-pi:hover{border-color:rgba(201,168,76,.25);}
+.adm-pim{width:55px;height:55px;object-fit:cover;border:1px solid var(--gbl);display:block;}
+.adm-pin h5{font-size:.88rem;margin-bottom:.15rem;}
+.adm-pin span{font-size:.75rem;color:var(--g1);}
+.adm-ac{display:flex;gap:.4rem;}
+.aeb,.adb{padding:.28rem .65rem;font-size:.72rem;font-family:'Tajawal',sans-serif;border:none;cursor:pointer;transition:all .3s;}
+.aeb{background:rgba(201,168,76,.08);border:1px solid var(--gbl);color:var(--txd);}
+.aeb:hover{border-color:var(--g1);color:var(--g1);}
+.adb{background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.25);color:#c0392b;}
+.adb:hover{background:rgba(192,57,43,.18);}
+.apf{background:rgba(201,168,76,.02);border:1px solid var(--gbl);padding:1.4rem;margin-bottom:1.5rem;display:none;}
+.apf.vis{display:block;}
+.adm-dash{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:2rem;}
+.dash-card{background:var(--gb);border:1px solid var(--gbl);padding:1.5rem;text-align:center;}
+.dash-card .num{font-family:'Cinzel',serif;font-size:2rem;color:var(--g1);}
+.dash-card .lbl{font-size:.8rem;color:var(--txd);margin-top:.3rem;}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(120px);background:linear-gradient(135deg,var(--g1),var(--g3));color:#000;padding:.75rem 2rem;font-size:.88rem;font-weight:700;z-index:99999;transition:transform .4s ease;font-family:'Tajawal',sans-serif;letter-spacing:.5px;white-space:nowrap;}
+.toast.on{transform:translateX(-50%) translateY(0);}
+
+/* DIVIDER */
+.divider{width:80px;height:2px;background:linear-gradient(90deg,transparent,var(--g1),transparent);margin:0 auto 1.5rem;}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(28px);transition:all .7s cubic-bezier(.25,.46,.45,.94);}
+.rv.vis{opacity:1;transform:translateY(0);}
+.rv-d1{transition-delay:.1s;}.rv-d2{transition-delay:.2s;}.rv-d3{transition-delay:.3s;}
+
+/* ANIMATIONS */
+@keyframes fdu{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fdup{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fdi{from{opacity:0}to{opacity:1}}
+@keyframes bnc{0%,100%{transform:translateY(0);opacity:1}50%{transform:translateY(-9px);opacity:.5}}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  .menu-g,.svc-g{grid-template-columns:repeat(2,1fr);}
+  .stats-g{grid-template-columns:repeat(2,1fr);}
+  .cntc-g,.about-g{grid-template-columns:1fr;gap:2.5rem;}
+  .ft-g{grid-template-columns:1fr 1fr;}
+  .tstm-g{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem;}nav.stk{padding:.7rem 1.5rem;}
+  .nls{display:none;}.hbg{display:flex;}
+  #hero{height:90vh;}
+  .htitle{font-size:clamp(2.5rem,8vw,4rem);}
+  #sldr{height:55vh;}
+  #svc,#menu,#cntc,#about,#tstm{padding:4rem 1.5rem;}
+  .svc-g,.menu-g,.tstm-g{grid-template-columns:1fr;}
+  .stats-g{grid-template-columns:repeat(2,1fr);}
+  #stats{padding:2.5rem 1.5rem;}
+  .menu-tabs{width:100%;justify-content:stretch;}
+  .mtab{flex:1;padding:.7rem .4rem;font-size:.75rem;letter-spacing:.5px;}
+  .ft-g{grid-template-columns:1fr;}
+  .sld-ovl{padding:1.5rem;}
+  .snav{width:36px;height:36px;font-size:1rem;}
+  .adm-bd{grid-template-columns:1fr;}
+  .adm-sb{border-left:none;border-bottom:1px solid var(--gbl);display:flex;flex-wrap:wrap;padding:.4rem;}
+  .adm-ni{border-right:none;border-bottom:2px solid transparent;padding:.4rem .7rem;font-size:.78rem;}
+  .adm-ni.on{border-bottom-color:var(--g1);border-right-color:transparent;}
+  .af-row{grid-template-columns:1fr;}
+  .adm-dash{grid-template-columns:repeat(2,1fr);}
+  .about-visual{height:280px;}
+  .about-year{padding:1rem;}
+}
+@media(max-width:480px){
+  nav{padding:.8rem 1rem;}
+  .hact{gap:.8rem;}
+  .btn-p,.btn-o{padding:.8rem 1.5rem;font-size:.88rem;}
+  .stats-g{gap:1rem;}#stats{padding:2rem .8rem;}
+  .snum{font-size:2.2rem;}
+  .adm-pi{grid-template-columns:45px 1fr auto;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="ldr">
+  <div class="ldr-logo">DAYOUB</div>
+  <div class="ldr-bar"><div class="ldr-prog"></div></div>
+</div>
+
+<!-- CUSTOM CURSOR -->
+<div class="cur" id="cur"></div>
+<div class="cur-dot" id="curDot"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nlg">DAYOUB</a>
+  <ul class="nls">
+    <li><a href="#hero">الرئيسية</a></li>
+    <li><a href="#svc">خدماتنا</a></li>
+    <li><a href="#menu">قائمة الطعام</a></li>
+    <li><a href="#about">عنا</a></li>
+    <li><a href="#cntc" class="ncta">تواصل معنا</a></li>
+  </ul>
+  <div class="hbg" id="hbg" onclick="toggleMobileNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="overlay-mob" id="mobOvl" onclick="closeMobileNav()"></div>
+<div class="mnav" id="mnav">
+  <button class="mclose" onclick="closeMobileNav()">✕</button>
+  <a href="#hero" onclick="closeMobileNav()">الرئيسية</a>
+  <a href="#svc" onclick="closeMobileNav()">خدماتنا</a>
+  <a href="#menu" onclick="closeMobileNav()">قائمة الطعام</a>
+  <a href="#about" onclick="closeMobileNav()">عن دايوب</a>
+  <a href="#tstm" onclick="closeMobileNav()">آراء العملاء</a>
+  <a href="#cntc" onclick="closeMobileNav()">تواصل معنا</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hcv"></canvas>
+  <div class="hero-ovl"></div>
+  <div class="hero-c">
+    <div class="hbadge">✦ مطعم دايوب الفاخر ✦</div>
+    <h1 class="htitle">
+      DAYOUB
+      <span id="heroTitleSpan">مطعم بلا حدود</span>
+    </h1>
+    <p class="hsubt" id="heroSubtEl">تجربة طعام استثنائية تجمع بين أصالة المطبخ الشرقي وإبداع الطهاة المحترفين في كل لقمة لا تُنسى</p>
+    <div class="hact">
+      <a href="#menu" class="btn-p">استكشف القائمة</a>
+      <a href="#cntc" class="btn-o">احجز طاولتك</a>
+    </div>
+  </div>
+  <div class="scrl">
+    <div class="scrl-d"></div>
+    <div class="scrl-t">انزل للأسفل</div>
+  </div>
+</section>
+
+<!-- SLIDER -->
+<section id="sldr">
+  <div class="sldr-w">
+    <div class="sldr-t" id="sldrTrack"></div>
+  </div>
+  <button class="snav spv" onclick="sliderPrev()">&#8249;</button>
+  <button class="snav snx" onclick="sliderNext()">&#8250;</button>
+  <div class="sdots" id="sdots"></div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-g">
+    <div class="stat rv"><div class="snum" data-count="5000">0</div><div class="slbl">عميل سعيد</div></div>
+    <div class="stat rv rv-d1"><div class="snum" data-count="8">0</div><div class="slbl">سنوات خبرة</div></div>
+    <div class="stat rv rv-d2"><div class="snum" data-count="120">0</div><div class="slbl">طبق متنوع</div></div>
+    <div class="stat rv rv-d3"><div class="snum" data-count="15">0</div><div class="slbl">طاهٍ محترف</div></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="svc">
+  <div class="sec-h rv">
+    <div class="sec-bg">خدماتنا المميزة</div>
+    <h2 class="sec-t">نقدم <em>أكثر</em> من مجرد طعام</h2>
+    <div class="divider"></div>
+    <p class="sec-d">في دايوب نؤمن أن التجربة المتكاملة هي ما يجعل زيارتك لا تُنسى، من الطعام إلى الجو إلى الخدمة</p>
+  </div>
+  <div class="svc-g">
+    <div class="svc-c rv">
+      <span class="svc-ic">🍽️</span>
+      <div class="svc-t">تناول الطعام في المطعم</div>
+      <div class="svc-d">استمتع بأجواء فاخرة ومريحة مع ديكور عصري وخدمة راقية على مدار اليوم من الفطور حتى العشاء</div>
+    </div>
+    <div class="svc-c rv rv-d1">
+      <span class="svc-ic">🛵</span>
+      <div class="svc-t">توصيل سريع للمنزل</div>
+      <div class="svc-d">نوصل طلبك طازجاً وساخناً إلى باب منزلك في أسرع وقت ممكن مع الحفاظ على جودة الطعام ومذاقه الأصيل</div>
+    </div>
+    <div class="svc-c rv rv-d2">
+      <span class="svc-ic">🎉</span>
+      <div class="svc-t">حجز المناسبات والأعياد</div>
+      <div class="svc-d">نوفر خدمة حجز قاعات خاصة للمناسبات العائلية والاجتماعية والاحتفالات مع قوائم طعام مخصصة حسب الطلب</div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="sec-h rv">
+    <div class="sec-bg">قائمة طعامنا</div>
+    <h2 class="sec-t">أشهى <em>الأطباق</em> الشرقية</h2>
+    <div class="divider"></div>
+    <p class="sec-d">نقدم لك تشكيلة واسعة من الأطباق الأصيلة والعصرية المحضرة بأجود المكونات وأيدي الطهاة المحترفين</p>
+  </div>
+  <div class="menu-tabs">
+    <button class="mtab on" onclick="switchTab('breakfast',this)">🌅 الإفطار</button>
+    <button class="mtab" onclick="switchTab('lunch',this)">☀️ الغداء</button>
+    <button class="mtab" onclick="switchTab('dinner',this)">🌙 العشاء</button>
+    <button class="mtab" onclick="switchTab('appetizers',this)">🥗 المقبلات</button>
+  </div>
+  <div id="pan-breakfast" class="mpan on"><div class="menu-g" id="grid-breakfast"></div></div>
+  <div id="pan-lunch" class="mpan"><div class="menu-g" id="grid-lunch"></div></div>
+  <div id="pan-dinner" class="mpan"><div class="menu-g" id="grid-dinner"></div></div>
+  <div id="pan-appetizers" class="mpan"><div class="menu-g" id="grid-appetizers"></div></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-g">
+    <div class="about-visual rv">
+      <img class="about-img" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&q=80" alt="مطعم دايوب" id="aboutImgEl">
+      <div class="about-accent"></div>
+      <div class="about-year">2016<small>منذ عام</small></div>
+    </div>
+    <div class="about-txt rv rv-d1">
+      <div class="sec-bg">قصتنا</div>
+      <h2 id="aboutTitleEl">لماذا تختار <em>دايوب؟</em></h2>
+      <div class="divider" style="margin:1rem 0 1.5rem;"></div>
+      <p id="aboutTextEl">منذ تأسيسه عام 2016، يقدم مطعم دايوب تجربة طعام لا مثيل لها تجمع بين أصالة المطبخ الشرقي وابتكار الطهاة المحترفين. نستخدم أجود المكونات الطازجة ونحرص على تقديم كل طبق بحب واهتمام بالتفاصيل.</p>
+      <ul class="about-list">
+        <li>مكونات طازجة مختارة يومياً من أفضل الموردين</li>
+        <li>طهاة محترفون ذوو خبرة عالمية تتجاوز 15 سنة</li>
+        <li>وصفات عائلية سرية توارثناها جيلاً بعد جيل</li>
+        <li>خدمة متميزة في أجواء دافئة ومريحة طوال اليوم</li>
+      </ul>
+      <a href="#cntc" class="btn-p">احجز طاولتك الآن</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="tstm">
+  <div class="sec-h rv">
+    <div class="sec-bg">آراء العملاء</div>
+    <h2 class="sec-t">ماذا يقول <em>زوارنا؟</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="tstm-g">
+    <div class="tstm-c rv">
+      <div class="tstm-q">"</div>
+      <div class="tstm-st">★★★★★</div>
+      <div class="tstm-t">تجربة لا تُنسى في مطعم دايوب! الطعام رائع والخدمة ممتازة. الشاورما كانت أفضل شاورما جربتها في حياتي. سنعود بالتأكيد مع العائلة.</div>
+      <div class="tstm-au">
+        <div class="tstm-av">أ</div>
+        <div><div class="tstm-nm">أحمد الخطيب</div><div class="tstm-rl">زبون دائم</div></div>
+      </div>
+    </div>
+    <div class="tstm-c rv rv-d1">
+      <div class="tstm-q">"</div>
+      <div class="tstm-st">★★★★★</div>
+      <div class="tstm-t">أجواء رائعة وطعام بمستوى المطاعم الفاخرة وبأسعار معقولة. الكباب المشوي وورق العنب لا يُقاومان. هذا المطعم يستحق كل تقدير.</div>
+      <div class="tstm-au">
+        <div class="tstm-av">س</div>
+        <div><div class="tstm-nm">سارة المحمد</div><div class="tstm-rl">زبونة منتظمة</div></div>
+      </div>
+    </div>
+    <div class="tstm-c rv rv-d2">
+      <div class="tstm-q">"</div>
+      <div class="tstm-st">★★★★☆</div>
+      <div class="tstm-t">جودة عالية وخدمة سريعة. فطور دايوب الملكي يجعلني أشعر بأنني في أفضل فندق. التوصيل أيضاً كان دقيقاً والطعام وصل ساخناً.</div>
+      <div class="tstm-au">
+        <div class="tstm-av">م</div>
+        <div><div class="tstm-nm">محمد الزعبي</div><div class="tstm-rl">زبون</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="cntc">
+  <div class="sec-h rv">
+    <div class="sec-bg">تواصل معنا</div>
+    <h2 class="sec-t">نحن هنا <em>لخدمتك</em></h2>
+    <div class="divider"></div>
+    <p class="sec-d">تواصل معنا لأي استفسار أو لحجز طاولتك، يسعدنا دائماً الرد عليك في أقرب وقت</p>
+  </div>
+  <div class="cntc-g">
+    <div class="cntc-info rv">
+      <div class="cntc-it">
+        <div class="cntc-ic">📍</div>
+        <div class="cntc-ct"><h4>عنواننا</h4><p id="addrEl">دمشق، شارع الثورة، مقابل البريد المركزي</p></div>
+      </div>
+      <div class="cntc-it">
+        <div class="cntc-ic">📞</div>
+        <div class="cntc-ct"><h4>اتصل بنا</h4><p id="phoneEl">+963 944 123 456</p></div>
+      </div>
+      <div class="cntc-it">
+        <div class="cntc-ic">🕐</div>
+        <div class="cntc-ct"><h4>ساعات العمل</h4><p id="hoursEl">من الساعة 7:00 صباحاً حتى 11:00 مساءً</p></div>
+      </div>
+      <div class="cntc-it">
+        <div class="cntc-ic">✉️</div>
+        <div class="cntc-ct"><h4>البريد الإلكتروني</h4><p id="emailEl">info@dayoub-restaurant.com</p></div>
+      </div>
+      <a href="#" class="wa-btn" id="waBtnEl">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        تواصل عبر واتساب
+      </a>
+    </div>
+    <div class="rv rv-d1">
+      <div style="background:var(--gb);border:1px solid var(--gbl);padding:2rem;">
+        <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:1.5rem;color:var(--g1);">أرسل رسالة</h3>
+        <div class="cntc-form">
+          <div class="fg"><input type="text" placeholder="اسمك الكريم"></div>
+          <div class="fg"><input type="tel" placeholder="رقم الهاتف"></div>
+          <div class="fg"><input type="email" placeholder="البريد الإلكتروني (اختياري)"></div>
+          <div class="fg"><textarea placeholder="رسالتك أو طلب الحجز..."></textarea></div>
+          <button class="btn-p" onclick="showToast('تم إرسال رسالتك بنجاح! سنتواصل معك قريباً')">إرسال الرسالة</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-g">
+    <div class="ft-b">
+      <h3>DAYOUB</h3>
+      <p>مطعم دايوب الفاخر — حيث تلتقي الأصالة بالإبداع في كل طبق نقدمه بشغف واهتمام بالتفاصيل منذ عام 2016.</p>
+      <div class="socials">
+        <a href="#" title="Instagram">IG</a>
+        <a href="#" title="Facebook">FB</a>
+        <a href="#" title="TikTok">TK</a>
+      </div>
+    </div>
+    <div class="ft-c">
+      <h4>روابط سريعة</h4>
+      <ul>
+        <li><a href="#hero">الرئيسية</a></li>
+        <li><a href="#svc">خدماتنا</a></li>
+        <li><a href="#menu">قائمة الطعام</a></li>
+        <li><a href="#about">عن دايوب</a></li>
+        <li><a href="#cntc">اتصل بنا</a></li>
+      </ul>
+    </div>
+    <div class="ft-c">
+      <h4>القائمة</h4>
+      <ul>
+        <li><a href="#menu">وجبات الإفطار</a></li>
+        <li><a href="#menu">وجبات الغداء</a></li>
+        <li><a href="#menu">وجبات العشاء</a></li>
+        <li><a href="#menu">المقبلات</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bot">
+    <p>© 2024 مطعم دايوب — جميع الحقوق محفوظة</p>
+    <button class="adm-tg" onclick="openLogin()">⚙ لوحة التحكم</button>
+  </div>
+</footer>
+
+<!-- FLOAT WA -->
+<a href="#" class="fwa" id="fwaEl" title="واتساب">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- LOGIN MODAL -->
+<div id="lgn">
+  <div class="lgn-bx">
+    <h3>DAYOUB</h3>
+    <p>لوحة تحكم المطعم — أدخل كلمة المرور</p>
+    <div class="af-g"><input class="ai" type="password" id="pwInput" placeholder="كلمة المرور..." onkeyup="if(event.key==='Enter')checkLogin()"></div>
+    <p class="lgn-err" id="lgnErr">كلمة المرور غير صحيحة</p>
+    <div style="display:flex;gap:.7rem;margin-top:1rem;">
+      <button class="ab" onclick="checkLogin()" style="flex:1">دخول</button>
+      <button class="ab ab-sec" onclick="document.getElementById('lgn').classList.remove('on')" style="flex:1">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adm">
+  <div id="adm-p">
+    <div class="adm-h">
+      <h2>⚙ لوحة تحكم دايوب</h2>
+      <button class="adm-cls" onclick="document.getElementById('adm').classList.remove('on')">✕</button>
+    </div>
+    <div class="adm-bd">
+      <div class="adm-sb">
+        <div class="adm-ni on" onclick="admSwitch('dash',this)">📊 لوحة الرئيسية</div>
+        <div class="adm-ni" onclick="admSwitch('slider',this)">🖼 السلايدر</div>
+        <div class="adm-ni" onclick="admSwitch('breakfast',this)">🌅 الإفطار</div>
+        <div class="adm-ni" onclick="admSwitch('lunch',this)">☀️ الغداء</div>
+        <div class="adm-ni" onclick="admSwitch('dinner',this)">🌙 العشاء</div>
+        <div class="adm-ni" onclick="admSwitch('appetizers',this)">🥗 المقبلات</div>
+        <div class="adm-ni" onclick="admSwitch('contact',this)">📞 التواصل</div>
+        <div class="adm-ni" onclick="admSwitch('settings',this)">🔧 الإعدادات</div>
+      </div>
+      <div class="adm-ct">
+
+        <!-- DASH -->
+        <div class="adm-sc on" id="adm-dash">
+          <h3>لوحة الرئيسية</h3>
+          <div class="adm-dash">
+            <div class="dash-card"><div class="num" id="d-slider">5</div><div class="lbl">صور السلايدر</div></div>
+            <div class="dash-card"><div class="num" id="d-products">24</div><div class="lbl">إجمالي المنتجات</div></div>
+            <div class="dash-card"><div class="num">✓</div><div class="lbl">الموقع يعمل</div></div>
+          </div>
+          <p style="color:var(--txd);font-size:.85rem;line-height:1.8;">مرحباً بك في لوحة تحكم مطعم دايوب. يمكنك من هنا التحكم بجميع محتويات الموقع بما في ذلك السلايدر والمنتجات وبيانات التواصل وإعدادات الصفحة الرئيسية.</p>
+          <div style="margin-top:1.5rem;padding:1rem;border:1px solid var(--gbl);background:rgba(201,168,76,.02);">
+            <p style="font-size:.82rem;color:var(--g1);margin-bottom:.5rem;">💡 نصائح الاستخدام:</p>
+            <p style="font-size:.8rem;color:var(--txd);line-height:1.8;">• استخدم روابط صور مباشرة (URL) من الإنترنت أو imgur أو أي مزود صور<br>• التغييرات تُحفظ تلقائياً في المتصفح<br>• اضغط "حفظ" بعد كل تعديل لتطبيقه فوراً على الموقع</p>
+          </div>
+        </div>
+
+        <!-- SLIDER -->
+        <div class="adm-sc" id="adm-slider">
+          <h3>إدارة السلايدر</h3>
+          <div class="apf vis" id="sliderAddForm">
+            <div class="af-g"><label>رابط الصورة (URL)</label><input class="ai" id="sl-img" placeholder="https://..."></div>
+            <div class="af-row">
+              <div class="af-g"><label>العنوان الرئيسي</label><input class="ai" id="sl-ttl" placeholder="عنوان الشريحة"></div>
+              <div class="af-g"><label>التصنيف (Badge)</label><input class="ai" id="sl-lb" placeholder="مثال: جديد"></div>
+            </div>
+            <div class="af-g"><label>الوصف</label><input class="ai" id="sl-dsc" placeholder="وصف قصير للشريحة"></div>
+            <div style="display:flex;gap:.7rem;margin-top:.5rem;">
+              <button class="ab" onclick="saveSlide()">💾 حفظ الشريحة</button>
+              <button class="ab ab-sec" onclick="clearSlideForm()">مسح</button>
+            </div>
+            <input type="hidden" id="sl-edit-idx" value="-1">
+          </div>
+          <div class="adm-lst" id="sliderList"></div>
+        </div>
+
+        <!-- PRODUCT SECTIONS (breakfast/lunch/dinner/appetizers) -->
+        <div class="adm-sc" id="adm-breakfast"><h3>إدارة وجبات الإفطار</h3><div id="pf-breakfast"></div><div class="adm-lst" id="pl-breakfast"></div></div>
+        <div class="adm-sc" id="adm-lunch"><h3>إدارة وجبات الغداء</h3><div id="pf-lunch"></div><div class="adm-lst" id="pl-lunch"></div></div>
+        <div class="adm-sc" id="adm-dinner"><h3>إدارة وجبات العشاء</h3><div id="pf-dinner"></div><div class="adm-lst" id="pl-dinner"></div></div>
+        <div class="adm-sc" id="adm-appetizers"><h3>إدارة المقبلات</h3><div id="pf-appetizers"></div><div class="adm-lst" id="pl-appetizers"></div></div>
+
+        <!-- CONTACT -->
+        <div class="adm-sc" id="adm-contact">
+          <h3>بيانات التواصل</h3>
+          <div class="af-g"><label>رقم واتساب (مع كود الدولة، بدون +)</label><input class="ai" id="c-wa" placeholder="963944123456"></div>
+          <div class="af-g"><label>رقم الهاتف (للعرض)</label><input class="ai" id="c-ph" placeholder="+963 944 123 456"></div>
+          <div class="af-g"><label>العنوان</label><input class="ai" id="c-ad" placeholder="المدينة، الشارع، الوصف"></div>
+          <div class="af-g"><label>البريد الإلكتروني</label><input class="ai" id="c-em" placeholder="info@dayoub.com"></div>
+          <div class="af-g"><label>ساعات العمل</label><input class="ai" id="c-hr" placeholder="من 7 صباحاً حتى 11 مساءً"></div>
+          <div class="af-row">
+            <div class="af-g"><label>رابط إنستغرام</label><input class="ai" id="c-ig" placeholder="https://instagram.com/..."></div>
+            <div class="af-g"><label>رابط فيسبوك</label><input class="ai" id="c-fb" placeholder="https://facebook.com/..."></div>
+          </div>
+          <button class="ab" onclick="saveContact()" style="margin-top:.5rem;">💾 حفظ بيانات التواصل</button>
+        </div>
+
+        <!-- SETTINGS -->
+        <div class="adm-sc" id="adm-settings">
+          <h3>إعدادات الموقع</h3>
+          <div class="af-g"><label>النص الفرعي للهيرو</label><input class="ai" id="s-hsub" placeholder="وصف المطعم في الصفحة الرئيسية"></div>
+          <div class="af-g"><label>عنوان قسم "عن دايوب"</label><input class="ai" id="s-abt" placeholder="عنوان القسم"></div>
+          <div class="af-g"><label>نص قسم "عن دايوب"</label><textarea class="at" id="s-abttx" placeholder="وصف المطعم في قسم عنا"></textarea></div>
+          <div class="af-g"><label>رابط صورة قسم "عن دايوب"</label><input class="ai" id="s-abimg" placeholder="https://..."></div>
+          <button class="ab" onclick="saveSettings()" style="margin-top:.5rem;">💾 حفظ الإعدادات</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const DEFAULT = {
+  slider:[
+    {img:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80',lb:'أصالة شرقية',ttl:'أشهى المأكولات الشرقية',dsc:'تجربة طهي أصيلة مع أجود المكونات الطازجة'},
+    {img:'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80',lb:'أجواء راقية',ttl:'مطعم دايوب الفاخر',dsc:'استمتع بتجربة تناول طعام لا تُنسى في أجواء استثنائية'},
+    {img:'https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=1920&q=80',lb:'المائدة المشرقية',ttl:'تنوع لا مثيل له',dsc:'أكثر من 120 طبقاً تقليدياً وعصرياً بانتظارك'},
+    {img:'https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=1920&q=80',lb:'المشاوي الفاخرة',ttl:'لحوم مختارة على الجمر',dsc:'أفخر المشاوي بنكهة أصيلة وتوابل سرية'},
+    {img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920&q=80',lb:'المطبخ الإبداعي',ttl:'فن الطهي الأصيل',dsc:'طهاة محترفون يبدعون في كل طبق بشغف وتفانٍ'}
+  ],
+  breakfast:[
+    {id:1,name:'فطور دايوب الملكي',desc:'طبق فطور متكامل يشمل البيض والجبن والزيتون والمربى مع خبز طازج',price:45000,rating:4.9,badge:'الأكثر طلباً',img:'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=600&q=80'},
+    {id:2,name:'بيض بالجبن والطماطم',desc:'بيض مقلي طازج مع جبن أبيض وطماطم ناضجة وزيت زيتون بكر ممتاز',price:25000,rating:4.7,badge:'',img:'https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=600&q=80'},
+    {id:3,name:'فول بالزيت والليمون',desc:'فول مدمس بالزيت والليمون والثوم والكمون مع الخضروات الطازجة',price:18000,rating:4.6,badge:'',img:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80'},
+    {id:4,name:'حمص بالطحينة',desc:'حمص بيتي الصنع بطحينة عالية الجودة وزيت زيتون وبابريكا حمراء',price:20000,rating:4.8,badge:'بيتي الصنع',img:'https://images.unsplash.com/photo-1514190051997-0f6f39ca5cde?w=600&q=80'},
+    {id:5,name:'مناقيش زعتر وجبن',desc:'مناقيش مخبوزة في الفرن مع زعتر وزيت وجبن عكاوي أو حلوم طازج',price:22000,rating:4.7,badge:'',img:'https://images.unsplash.com/photo-1574085733277-851d9d856a3a?w=600&q=80'},
+    {id:6,name:'كاسة عسل مع قشطة',desc:'عسل جبلي أصيل مع قشطة طازجة ومربى التين المنزلي الفاخر',price:30000,rating:4.9,badge:'طازج يومياً',img:'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=600&q=80'}
+  ],
+  lunch:[
+    {id:7,name:'شاورما لحم دايوب',desc:'لحم غنم مشوي على الحجر بتوابل دايوب السرية مع صوص الثوم والمخللات',price:65000,rating:4.9,badge:'الأكثر طلباً',img:'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80'},
+    {id:8,name:'كباب مشوي مع أرز',desc:'كباب لحم طازج مشوي على الجمر مع أرز بسمتي وصلصة اللبن والمقبلات',price:80000,rating:4.8,badge:'',img:'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&q=80'},
+    {id:9,name:'دجاج مشوي كامل',desc:'دجاج مشوي كامل متبل بالتوابل الشرقية مع البطاطا المشوية والسلطة',price:95000,rating:4.7,badge:'للأسرة',img:'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=600&q=80'},
+    {id:10,name:'مكلوبة دايوب',desc:'مكلوبة تقليدية باللحم والخضار والأرز المعطر بالتوابل الدافئة الشرقية',price:70000,rating:4.9,badge:'تراثي',img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80'},
+    {id:11,name:'كفتة بالصينية',desc:'كفتة لحم مشكلة يدوياً بالبصل والبقدونس مع الطماطم والبصل في الفرن',price:60000,rating:4.6,badge:'',img:'https://images.unsplash.com/photo-1529042410759-befb1204b468?w=600&q=80'},
+    {id:12,name:'سمك مقلي مع بطاطا',desc:'سمك طازج مقلي بالزيت النقي مع بطاطا مقلية وصلصة الطرطور اللذيذ',price:85000,rating:4.7,badge:'طازج',img:'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&q=80'}
+  ],
+  dinner:[
+    {id:13,name:'ستيك لحم أنغوس',desc:'ستيك لحم بقري أنغوس درجة أولى مع صلصة الفطر الكريمية والبطاطا الذهبية',price:120000,rating:5.0,badge:'بريميوم',img:'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&q=80'},
+    {id:14,name:'دجاج بالكريمة والفطر',desc:'صدر دجاج طري بصلصة الكريمة والفطر البري والثوم المحمص الفاخر',price:85000,rating:4.8,badge:'',img:'https://images.unsplash.com/photo-1432139509613-5c4255815697?w=600&q=80'},
+    {id:15,name:'روبيان مشوي فاخر',desc:'روبيان ضخم مشوي بزبدة الثوم والليمون مع الخضار المشوية والأرز',price:110000,rating:4.9,badge:'بحري',img:'https://images.unsplash.com/photo-1565680018434-b60b3dbe5e62?w=600&q=80'},
+    {id:16,name:'لحم بالخضار على الجمر',desc:'لحم غنم طري مع الخضار الموسمية المشوية على الجمر بتوابل البحر الأبيض',price:95000,rating:4.7,badge:'',img:'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&q=80'},
+    {id:17,name:'باستا دايوب الخاصة',desc:'باستا فتيتشيني مع صوص الأرابياتا والريحان الطازج وجبن البارميزان',price:70000,rating:4.6,badge:'',img:'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=600&q=80'},
+    {id:18,name:'برغر دايوب المزدوج',desc:'برغر لحم مزدوج مع جبن شيدر وطماطم وخس وصلصة دايوب السرية الفاخرة',price:65000,rating:4.8,badge:"شيف's ستار",img:'https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=600&q=80'}
+  ],
+  appetizers:[
+    {id:19,name:'حمص ممحوص',desc:'حمص كريمي ناعم مع زيت الزيتون البكر والبابريكا والصنوبر المحمص',price:20000,rating:4.9,badge:'الأشهر',img:'https://images.unsplash.com/photo-1575388524878-61e48fce3f30?w=600&q=80'},
+    {id:20,name:'متبل باذنجان',desc:'باذنجان مشوي على الجمر مع طحينة وثوم وليمون وزيت زيتون بكر ممتاز',price:18000,rating:4.7,badge:'',img:'https://images.unsplash.com/photo-1542281286-9e0a16bb7366?w=600&q=80'},
+    {id:21,name:'ورق عنب بالزيت',desc:'ورق عنب محشو بالأرز والخضار وبذور الرمان بزيت الزيتون والليمون',price:25000,rating:4.8,badge:'تراثي',img:'https://images.unsplash.com/photo-1565180200-21f4e6c31571?w=600&q=80'},
+    {id:22,name:'فتة بالحمص واللبن',desc:'فتة خبز مقرمشة مع حمص وسميد وزبادي طازج وتوابل معطرة لذيذة',price:22000,rating:4.6,badge:'',img:'https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=600&q=80'},
+    {id:23,name:'سلطة فتوش شامية',desc:'سلطة فتوش تقليدية بالخضار الطازجة والخبز المقرمش وصلصة الرمان',price:20000,rating:4.7,badge:'',img:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80'},
+    {id:24,name:'تبولة دايوب الطازجة',desc:'تبولة بقدونس طازج وبرغل وطماطم وخيار وعصير ليمون وزيت زيتون',price:18000,rating:4.8,badge:'طازج يومياً',img:'https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=600&q=80'}
+  ],
+  contact:{wa:'963944123456',ph:'+963 944 123 456',ad:'دمشق، شارع الثورة، مقابل البريد المركزي',em:'info@dayoub-restaurant.com',hr:'من الساعة 7:00 صباحاً حتى 11:00 مساءً',ig:'#',fb:'#'},
+  settings:{hsub:'تجربة طعام استثنائية تجمع بين أصالة المطبخ الشرقي وإبداع الطهاة المحترفين في كل لقمة لا تُنسى',abt:'لماذا تختار دايوب؟',abttx:'منذ تأسيسه عام 2016، يقدم مطعم دايوب تجربة طعام لا مثيل لها تجمع بين أصالة المطبخ الشرقي وابتكار الطهاة المحترفين. نستخدم أجود المكونات الطازجة ونحرص على تقديم كل طبق بحب واهتمام بالتفاصيل.',abimg:'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&q=80'}
+};
+
+let D = JSON.parse(JSON.stringify(DEFAULT));
+
+function loadData(){
+  const s = localStorage.getItem('dayoubData');
+  if(s) try{ D = JSON.parse(s); }catch(e){}
+}
+
+function saveData(){ localStorage.setItem('dayoubData', JSON.stringify(D)); }
+
+// ============================================================
+// HERO 3D PARTICLES
+// ============================================================
+function initParticles(){
+  const cv = document.getElementById('hcv');
+  const ctx = cv.getContext('2d');
+  let pts = [], W, H, cx, cy, ang = 0;
+  let mx = -9999, my = -9999;
+
+  function resize(){
+    W = cv.width = window.innerWidth;
+    H = cv.height = window.innerHeight;
+    cx = W/2; cy = H/2;
+  }
+
+  function initPts(){
+    const n = Math.min(70, Math.floor(W*H/15000));
+    pts = Array.from({length:n}, ()=>({
+      x:(Math.random()-.5)*1400, y:(Math.random()-.5)*900,
+      z:(Math.random()-.5)*900,
+      vx:(Math.random()-.5)*.35, vy:(Math.random()-.5)*.35, vz:(Math.random()-.5)*.35,
+      sz:Math.random()*2.5+.4, br:Math.random()*.5+.5
+    }));
+  }
+
+  function proj(x,y,z){
+    const f=650, s=f/(f+z);
+    return {x:cx+(x)*s, y:cy+(y)*s, s:Math.max(0,s)};
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ang+=.0018;
+    const cos=Math.cos(ang), sin=Math.sin(ang);
+
+    const mapped = pts.map(p=>{
+      p.x+=p.vx; p.y+=p.vy; p.z+=p.vz;
+      if(Math.abs(p.x)>700) p.vx*=-1;
+      if(Math.abs(p.y)>450) p.vy*=-1;
+      if(Math.abs(p.z)>450) p.vz*=-1;
+      const rx=p.x*cos-p.z*sin, rz=p.x*sin+p.z*cos;
+      return {...proj(rx,p.y,rz), br:p.br, sz:p.sz};
+    });
+
+    // Lines
+    for(let i=0;i<mapped.length;i++){
+      for(let j=i+1;j<mapped.length;j++){
+        const a=mapped[i],b=mapped[j];
+        const d=Math.hypot(a.x-b.x,a.y-b.y);
+        if(d<130){
+          const al=(1-d/130)*.28*Math.min(a.s,b.s);
+          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
+          ctx.strokeStyle=`rgba(201,168,76,${al})`; ctx.lineWidth=.7; ctx.stroke();
+        }
+      }
+    }
+
+    // Dots
+    for(const p of mapped){
+      if(p.s<=0) continue;
+      const al=p.s*p.br, r=p.sz*p.s;
+      const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,r*5);
+      g.addColorStop(0,`rgba(232,201,107,${al*.75})`);
+      g.addColorStop(.4,`rgba(201,168,76,${al*.25})`);
+      g.addColorStop(1,`rgba(201,168,76,0)`);
+      ctx.beginPath(); ctx.arc(p.x,p.y,r*5,0,Math.PI*2); ctx.fillStyle=g; ctx.fill();
+      ctx.beginPath(); ctx.arc(p.x,p.y,r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(240,214,130,${al})`; ctx.fill();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', ()=>{ resize(); });
+  document.addEventListener('mousemove', e=>{ mx=e.clientX-cx; my=e.clientY-cy; });
+  resize(); initPts(); draw();
+}
+
+// ============================================================
+// SLIDER
+// ============================================================
+let slCur=0, slRaw=1, slAnim=false, slTimer=null;
+
+function buildSlider(){
+  const slides = D.slider;
+  const track = document.getElementById('sldrTrack');
+  const dots = document.getElementById('sdots');
+  const all = [slides[slides.length-1], ...slides, slides[0]];
+  
+  track.innerHTML = all.map((s,i)=>`
+    <div class="sld">
+      <img src="${s.img}" alt="${s.ttl}" loading="lazy" onerror="this.style.background='#1a1505'">
+      <div class="sld-ovl"><div class="sld-c">
+        ${s.lb?`<div class="sld-lb">${s.lb}</div>`:''}
+        <h2 class="sld-ttl">${s.ttl}</h2>
+        <p class="sld-dsc">${s.dsc}</p>
+      </div></div>
+    </div>
+  `).join('');
+
+  dots.innerHTML = slides.map((_,i)=>`<div class="sdot${i===0?' on':''}" onclick="slGo(${i+1})"></div>`).join('');
+
+  track.style.transition='none';
+  track.style.transform=`translateX(-100%)`;
+  slRaw=1; slCur=0;
+
+  track.addEventListener('transitionend',()=>{
+    const n=slides.length;
+    if(slRaw>=n+1){slRaw=1;track.style.transition='none';track.style.transform=`translateX(-100%)`;}
+    if(slRaw<=0){slRaw=n;track.style.transition='none';track.style.transform=`translateX(-${n*100}%)`;}
+    slAnim=false;
+    slCur=slRaw-1;
+    if(slCur<0)slCur=n-1;
+    if(slCur>=n)slCur=0;
+    updateDots();
+  });
+
+  startSlider();
+}
+
+function slMove(idx, animate=true){
+  const track=document.getElementById('sldrTrack');
+  slRaw=idx;
+  if(animate){track.style.transition='transform .85s cubic-bezier(.25,.46,.45,.94)';}
+  track.style.transform=`translateX(-${idx*100}%)`;
+}
+
+function slGo(idx){ if(slAnim)return; slAnim=true; slMove(idx); }
+
+function sliderNext(){ if(slAnim)return; slAnim=true; slMove(slRaw+1); resetTimer(); }
+function sliderPrev(){ if(slAnim)return; slAnim=true; slMove(slRaw-1); resetTimer(); }
+
+function updateDots(){
+  document.querySelectorAll('.sdot').forEach((d,i)=>d.classList.toggle('on',i===slCur));
+}
+
+function startSlider(){ slTimer=setInterval(()=>{ if(!slAnim){ slAnim=true; slMove(slRaw+1); } },4200); }
+function resetTimer(){ clearInterval(slTimer); startSlider(); }
+
+// ============================================================
+// MENU RENDER
+// ============================================================
+function stars(r){
+  return Array.from({length:5},(_,i)=>i<Math.floor(r)?'★':(i<r?'✦':'☆')).join('');
+}
+function price(p){ return p.toLocaleString('ar')+'<small> ل.س</small>'; }
+
+function renderMenu(cat){
+  const grid=document.getElementById('grid-'+cat);
+  if(!grid)return;
+  grid.innerHTML=(D[cat]||[]).map((p,i)=>`
+    <div class="prd rv" style="transition-delay:${i*.07}s">
+      <div class="prd-img">
+        <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#1a1505,#2a1e07)'">
+        <div class="prd-grd"></div>
+        ${p.badge?`<div class="prd-bdg">${p.badge}</div>`:''}
+      </div>
+      <div class="prd-b">
+        <div class="prd-n">${p.name}</div>
+        <div class="prd-d">${p.desc}</div>
+        <div class="prd-f">
+          <div class="product-rating">
+            <span class="stars">${stars(p.rating)}</span>
+            <span class="rnum">(${p.rating})</span>
+          </div>
+          <div class="prd-p">${price(p.price)}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  observeReveal();
+}
+
+function switchTab(cat, btn){
+  document.querySelectorAll('.mtab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.mpan').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('pan-'+cat).classList.add('on');
+  renderMenu(cat);
+}
+
+// ============================================================
+// CONTACT RENDER
+// ============================================================
+function renderContact(){
+  const c=D.contact;
+  const a=document.getElementById('addrEl');
+  const ph=document.getElementById('phoneEl');
+  const hr=document.getElementById('hoursEl');
+  const em=document.getElementById('emailEl');
+  const wa=document.getElementById('waBtnEl');
+  const fwa=document.getElementById('fwaEl');
+  if(a)a.textContent=c.ad;
+  if(ph)ph.textContent=c.ph;
+  if(hr)hr.textContent=c.hr;
+  if(em)em.textContent=c.em;
+  if(wa)wa.href=`https://wa.me/${c.wa}`;
+  if(fwa)fwa.href=`https://wa.me/${c.wa}`;
+}
+
+// ============================================================
+// SETTINGS RENDER
+// ============================================================
+function renderSettings(){
+  const s=D.settings;
+  const sub=document.getElementById('heroSubtEl');
+  const abt=document.getElementById('aboutTitleEl');
+  const abttx=document.getElementById('aboutTextEl');
+  const abimg=document.getElementById('aboutImgEl');
+  if(sub)sub.textContent=s.hsub;
+  if(abt)abt.innerHTML=s.abt.replace('دايوب','<em>دايوب؟</em>');
+  if(abttx)abttx.textContent=s.abttx;
+  if(abimg&&s.abimg)abimg.src=s.abimg;
+}
+
+// ============================================================
+// SCROLL & REVEAL
+// ============================================================
+function observeReveal(){
+  const els=document.querySelectorAll('.rv:not(.vis)');
+  if('IntersectionObserver' in window){
+    const obs=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('vis');} });
+    },{threshold:.12});
+    els.forEach(el=>obs.observe(el));
+  } else { els.forEach(el=>el.classList.add('vis')); }
+}
+
+// NAV SCROLL
+window.addEventListener('scroll',()=>{
+  const nav=document.getElementById('navbar');
+  nav.classList.toggle('stk', window.scrollY>60);
+});
+
+// COUNTER
+function animateCounter(el){
+  const target=+el.dataset.count;
+  const dur=2000, step=50;
+  let cur=0;
+  const inc=target/(dur/step);
+  const t=setInterval(()=>{
+    cur=Math.min(cur+inc,target);
+    el.textContent=Math.floor(cur).toLocaleString('ar');
+    if(cur>=target){clearInterval(t);el.textContent=(target>=1000?target.toLocaleString('ar'):target)+'';}
+  },step);
+}
+
+function initCounters(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting&&!e.target.dataset.done){
+        e.target.dataset.done='1';
+        animateCounter(e.target);
+      }
+    });
+  },{threshold:.5});
+  document.querySelectorAll('.snum[data-count]').forEach(el=>obs.observe(el));
+}
+
+// ============================================================
+// CURSOR
+// ============================================================
+function initCursor(){
+  const cur=document.getElementById('cur');
+  const dot=document.getElementById('curDot');
+  let tx=0,ty=0;
+  document.addEventListener('mousemove',e=>{
+    tx=e.clientX; ty=e.clientY;
+    dot.style.left=tx+'px'; dot.style.top=ty+'px';
+    cur.style.left=tx+'px'; cur.style.top=ty+'px';
+  });
+  document.addEventListener('mouseover',e=>{
+    if(e.target.closest('a,button,.prd,.svc-c,.tstm-c,.mtab'))cur.classList.add('big');
+    else cur.classList.remove('big');
+  });
+}
+
+// ============================================================
+// MOBILE NAV
+// ============================================================
+function toggleMobileNav(){
+  document.getElementById('mnav').classList.toggle('open');
+  document.getElementById('mobOvl').classList.toggle('show');
+}
+function closeMobileNav(){
+  document.getElementById('mnav').classList.remove('open');
+  document.getElementById('mobOvl').classList.remove('show');
+}
+
+// ============================================================
+// ADMIN
+// ============================================================
+function openLogin(){ document.getElementById('lgn').classList.add('on'); document.getElementById('pwInput').value=''; document.getElementById('lgnErr').style.display='none'; setTimeout(()=>document.getElementById('pwInput').focus(),100); }
+function checkLogin(){
+  if(document.getElementById('pwInput').value==='dayoub2024'){
+    document.getElementById('lgn').classList.remove('on');
+    openAdmin();
+  } else {
+    document.getElementById('lgnErr').style.display='block';
+  }
+}
+
+function openAdmin(){
+  document.getElementById('adm').classList.add('on');
+  loadAdminForms();
+  renderAdminSlider();
+  renderAdminProducts('breakfast');
+  renderAdminProducts('lunch');
+  renderAdminProducts('dinner');
+  renderAdminProducts('appetizers');
+  updateDashStats();
+}
+
+function loadAdminForms(){
+  const c=D.contact;
+  const s=D.settings;
+  const set=(id,val)=>{const el=document.getElementById(id);if(el)el.value=val||'';};
+  set('c-wa',c.wa);set('c-ph',c.ph);set('c-ad',c.ad);set('c-em',c.em);set('c-hr',c.hr);set('c-ig',c.ig);set('c-fb',c.fb);
+  set('s-hsub',s.hsub);set('s-abt',s.abt);set('s-abttx',s.abttx);set('s-abimg',s.abimg);
+}
+
+function admSwitch(sec,btn){
+  document.querySelectorAll('.adm-sc').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.adm-ni').forEach(b=>b.classList.remove('on'));
+  document.getElementById('adm-'+sec).classList.add('on');
+  btn.classList.add('on');
+}
+
+function updateDashStats(){
+  const ds=document.getElementById('d-slider');
+  const dp=document.getElementById('d-products');
+  if(ds) ds.textContent=D.slider.length;
+  if(dp) dp.textContent=(D.breakfast.length+D.lunch.length+D.dinner.length+D.appetizers.length);
+}
+
+// SLIDER ADMIN
+function renderAdminSlider(){
+  const lst=document.getElementById('sliderList');
+  if(!lst)return;
+  lst.innerHTML=D.slider.map((s,i)=>`
+    <div class="adm-pi">
+      <img class="adm-pim" src="${s.img}" alt="${s.ttl}" onerror="this.style.background='#1a1505'">
+      <div class="adm-pin"><h5>${s.ttl}</h5><span>${s.lb||'—'}</span></div>
+      <div class="adm-ac">
+        <button class="aeb" onclick="editSlide(${i})">✎ تعديل</button>
+        <button class="adb" onclick="delSlide(${i})">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function editSlide(i){
+  const s=D.slider[i];
+  const get=id=>document.getElementById(id);
+  get('sl-img').value=s.img;get('sl-ttl').value=s.ttl;get('sl-lb').value=s.lb;get('sl-dsc').value=s.dsc;
+  get('sl-edit-idx').value=i;
+  document.getElementById('sliderAddForm').classList.add('vis');
+  document.getElementById('sliderAddForm').scrollIntoView({behavior:'smooth'});
+}
+
+function clearSlideForm(){
+  ['sl-img','sl-ttl','sl-lb','sl-dsc'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('sl-edit-idx').value=-1;
+}
+
+function saveSlide(){
+  const img=document.getElementById('sl-img').value.trim();
+  const ttl=document.getElementById('sl-ttl').value.trim();
+  const lb=document.getElementById('sl-lb').value.trim();
+  const dsc=document.getElementById('sl-dsc').value.trim();
+  if(!img||!ttl){showToast('يرجى إدخال رابط الصورة والعنوان');return;}
+  const idx=+document.getElementById('sl-edit-idx').value;
+  const obj={img,ttl,lb,dsc};
+  if(idx>=0) D.slider[idx]=obj; else D.slider.push(obj);
+  saveData(); renderAdminSlider(); clearSlideForm(); buildSlider(); updateDashStats();
+  showToast(idx>=0?'تم تحديث الشريحة':'تمت إضافة الشريحة');
+}
+
+function delSlide(i){
+  if(D.slider.length<=1){showToast('يجب إبقاء شريحة واحدة على الأقل');return;}
+  D.slider.splice(i,1); saveData(); renderAdminSlider(); buildSlider(); updateDashStats();
+  showToast('تم حذف الشريحة');
+}
+
+// PRODUCTS ADMIN
+function renderAdminProducts(cat){
+  const lst=document.getElementById('pl-'+cat);
+  const frm=document.getElementById('pf-'+cat);
+  if(!lst||!frm)return;
+
+  frm.innerHTML=`
+    <div class="apf vis" id="apf-${cat}">
+      <div class="af-g"><label>اسم الطبق</label><input class="ai" id="${cat}-pn" placeholder="اسم الطبق"></div>
+      <div class="af-g"><label>الوصف</label><textarea class="at" id="${cat}-pd" placeholder="وصف الطبق"></textarea></div>
+      <div class="af-row">
+        <div class="af-g"><label>السعر (ل.س)</label><input class="ai" type="number" id="${cat}-pp" placeholder="0"></div>
+        <div class="af-g"><label>التقييم (1-5)</label><input class="ai" type="number" step=".1" min="1" max="5" id="${cat}-pr" placeholder="4.5"></div>
+      </div>
+      <div class="af-row">
+        <div class="af-g"><label>رابط الصورة</label><input class="ai" id="${cat}-pi" placeholder="https://..."></div>
+        <div class="af-g"><label>Badge (اختياري)</label><input class="ai" id="${cat}-pb" placeholder="مثال: الأكثر طلباً"></div>
+      </div>
+      <input type="hidden" id="${cat}-pid" value="-1">
+      <div style="display:flex;gap:.7rem;margin-top:.6rem;">
+        <button class="ab" onclick="saveProd('${cat}')">💾 حفظ الطبق</button>
+        <button class="ab ab-sec" onclick="clearProdForm('${cat}')">مسح</button>
+      </div>
+    </div>
+  `;
+
+  lst.innerHTML=D[cat].map((p,i)=>`
+    <div class="adm-pi">
+      <img class="adm-pim" src="${p.img}" alt="${p.name}" onerror="this.style.background='#1a1505'">
+      <div class="adm-pin"><h5>${p.name}</h5><span>${p.price.toLocaleString('ar')} ل.س • ⭐ ${p.rating}</span></div>
+      <div class="adm-ac">
+        <button class="aeb" onclick="editProd('${cat}',${i})">✎</button>
+        <button class="adb" onclick="delProd('${cat}',${i})">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function editProd(cat,i){
+  const p=D[cat][i];
+  const s=id=>document.getElementById(cat+'-'+id);
+  s('pn').value=p.name;s('pd').value=p.desc;s('pp').value=p.price;s('pr').value=p.rating;s('pi').value=p.img;s('pb').value=p.badge||'';s('pid').value=i;
+  document.getElementById('apf-'+cat).scrollIntoView({behavior:'smooth'});
+}
+
+function clearProdForm(cat){
+  ['pn','pd','pp','pr','pi','pb'].forEach(k=>document.getElementById(cat+'-'+k).value='');
+  document.getElementById(cat+'-pid').value=-1;
+}
+
+function saveProd(cat){
+  const s=id=>document.getElementById(cat+'-'+id).value.trim();
+  const name=s('pn'),desc=s('pd'),price=+s('pp'),rating=+s('pr'),img=s('pi'),badge=s('pb');
+  if(!name||!price){showToast('يرجى ملء اسم الطبق والسعر');return;}
+  const idx=+document.getElementById(cat+'-pid').value;
+  const obj={id:Date.now(),name,desc,price,rating:Math.min(5,Math.max(1,rating||4.5)),img:img||'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600',badge};
+  if(idx>=0) D[cat][idx]=obj; else D[cat].push(obj);
+  saveData(); renderAdminProducts(cat); renderMenu(cat); clearProdForm(cat); updateDashStats();
+  showToast(idx>=0?'تم تحديث الطبق':'تمت إضافة الطبق');
+}
+
+function delProd(cat,i){
+  D[cat].splice(i,1); saveData(); renderAdminProducts(cat); renderMenu(cat); updateDashStats();
+  showToast('تم حذف الطبق');
+}
+
+function saveContact(){
+  const g=id=>document.getElementById(id).value.trim();
+  D.contact={wa:g('c-wa'),ph:g('c-ph'),ad:g('c-ad'),em:g('c-em'),hr:g('c-hr'),ig:g('c-ig'),fb:g('c-fb')};
+  saveData(); renderContact(); showToast('تم حفظ بيانات التواصل');
+}
+
+function saveSettings(){
+  const g=id=>document.getElementById(id).value.trim();
+  D.settings={hsub:g('s-hsub'),abt:g('s-abt'),abttx:g('s-abttx'),abimg:g('s-abimg')};
+  saveData(); renderSettings(); showToast('تم حفظ الإعدادات');
+}
+
+// TOAST
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('on');
+  setTimeout(()=>t.classList.remove('on'),3200);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded',()=>{
+  loadData();
+  initParticles();
+  initCursor();
+  buildSlider();
+  renderMenu('breakfast');
+  renderContact();
+  renderSettings();
+  observeReveal();
+  initCounters();
+
+  // Loader
+  setTimeout(()=>{
+    const ldr=document.getElementById('ldr');
+    ldr.classList.add('off');
+    setTimeout(()=>ldr.remove(),700);
+  },2400);
+
+  // Enter key for login
+  document.getElementById('pwInput')?.addEventListener('keyup',e=>{ if(e.key==='Enter') checkLogin(); });
+
+  // Hint in console
+  console.log('%c🍽 DAYOUB Admin', 'color:#c9a84c;font-size:1.2rem;font-weight:bold;');
+  console.log('%cPassword: dayoub2024', 'color:#888;');
+});
+</script>
+</body>
+</html>
