@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dayoub | أثاث منزلي فاخر</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --primary: #1B3D2F;
+  --primary-light: #2A5E47;
+  --primary-dark: #122A1F;
+  --secondary: #C8956C;
+  --secondary-light: #E0B898;
+  --bg: #F5EFE0;
+  --bg-light: #FDFAF4;
+  --bg-dark: #EDE4D0;
+  --text: #1C2B22;
+  --text-light: #5A7060;
+  --text-muted: #8FA38B;
+  --white: #FFFFFF;
+  --card-bg: #FFFEF9;
+  --border: #D8CDB8;
+  --shadow: rgba(27,61,47,0.12);
+  --shadow-deep: rgba(27,61,47,0.22);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.7;}
+img{max-width:100%;display:block;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;border:none;font-family:'Tajawal',sans-serif;}
+ul{list-style:none;}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:7px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--primary-light);border-radius:4px;}
+
+/* ===== HEADER ===== */
+.header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(27,61,47,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(200,149,108,0.2);transition:var(--transition);}
+.header.scrolled{box-shadow:0 4px 30px var(--shadow-deep);}
+.header-inner{max-width:1400px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:75px;gap:24px;}
+.logo{display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.logo-icon{width:48px;height:48px;background:linear-gradient(135deg,var(--secondary),var(--secondary-light));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--white);}
+.logo-text{color:var(--white);}
+.logo-text h1{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;letter-spacing:1px;line-height:1;}
+.logo-text span{font-size:11px;color:var(--secondary-light);letter-spacing:2px;text-transform:uppercase;}
+.nav{display:flex;align-items:center;gap:4px;}
+.nav a{color:rgba(255,255,255,0.85);padding:8px 16px;border-radius:8px;font-size:15px;font-weight:500;transition:var(--transition);white-space:nowrap;}
+.nav a:hover,.nav a.active{color:var(--secondary-light);background:rgba(200,149,108,0.15);}
+.header-actions{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn-admin{background:rgba(200,149,108,0.2);color:var(--secondary-light);border:1px solid rgba(200,149,108,0.4);padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;transition:var(--transition);}
+.btn-admin:hover{background:var(--secondary);color:var(--white);}
+.menu-toggle{display:none;flex-direction:column;gap:5px;background:transparent;padding:6px;border-radius:6px;}
+.menu-toggle span{display:block;width:26px;height:2px;background:var(--white);border-radius:2px;transition:var(--transition);}
+.mobile-nav{display:none;position:fixed;top:75px;right:0;width:280px;height:calc(100vh - 75px);background:var(--primary-dark);padding:24px;z-index:999;transform:translateX(100%);transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);overflow-y:auto;}
+.mobile-nav.open{transform:translateX(0);}
+.mobile-nav a{display:block;color:rgba(255,255,255,0.85);padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.07);font-size:16px;transition:var(--transition);}
+.mobile-nav a:hover{color:var(--secondary-light);padding-right:22px;}
+
+/* ===== HERO SLIDER ===== */
+.hero{height:100vh;min-height:600px;max-height:900px;overflow:hidden;position:relative;margin-top:75px;}
+.slides-wrapper{display:flex;height:100%;animation:slideRTL 28s linear infinite;}
+.slide{min-width:100%;height:100%;position:relative;flex-shrink:0;}
+.slide img{width:100%;height:100%;object-fit:cover;}
+.slide-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(18,42,31,0.75) 0%,rgba(18,42,31,0.3) 60%,transparent 100%);}
+.slide-content{position:absolute;top:50%;transform:translateY(-50%);right:8%;text-align:right;max-width:580px;}
+.slide-content h2{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,64px);color:var(--white);font-weight:800;line-height:1.15;margin-bottom:18px;text-shadow:0 2px 20px rgba(0,0,0,0.3);}
+.slide-content p{font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,0.88);margin-bottom:32px;font-weight:400;}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--secondary),var(--secondary-light));color:var(--white);padding:15px 34px;border-radius:50px;font-size:16px;font-weight:700;transition:var(--transition);box-shadow:0 4px 20px rgba(200,149,108,0.4);}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(200,149,108,0.5);}
+.btn-primary i{font-size:14px;}
+@keyframes slideRTL{0%{transform:translateX(0);}100%{transform:translateX(-500%);}}
+.hero-indicators{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10;}
+.hero-indicators span{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.4);transition:var(--transition);}
+.hero-indicators span.active{background:var(--secondary);width:28px;border-radius:4px;}
+.hero-scroll{position:absolute;bottom:35px;right:40px;color:rgba(255,255,255,0.6);font-size:12px;letter-spacing:2px;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px;animation:bounceDown 2s infinite;}
+.hero-scroll::after{content:'';width:1px;height:40px;background:rgba(255,255,255,0.3);}
+@keyframes bounceDown{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+
+/* ===== SECTIONS GENERAL ===== */
+.section-header{text-align:center;max-width:700px;margin:0 auto 56px;}
+.section-label{display:inline-block;background:rgba(200,149,108,0.12);color:var(--secondary);font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:6px 18px;border-radius:50px;border:1px solid rgba(200,149,108,0.3);margin-bottom:16px;}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,42px);font-weight:700;color:var(--primary);line-height:1.25;margin-bottom:16px;}
+.section-desc{color:var(--text-light);font-size:16px;line-height:1.8;}
+.section-divider{width:60px;height:3px;background:linear-gradient(90deg,var(--secondary),var(--secondary-light));border-radius:2px;margin:18px auto 0;}
+.container{max-width:1400px;margin:0 auto;padding:0 24px;}
+
+/* ===== CATEGORIES ===== */
+.categories-section{padding:90px 0;background:var(--bg-light);}
+.categories-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+@media(max-width:900px){.categories-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:560px){.categories-grid{grid-template-columns:1fr;}}
+.category-card{border-radius:var(--radius);overflow:hidden;position:relative;cursor:pointer;aspect-ratio:4/3;transition:var(--transition);}
+.category-card img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;}
+.category-card:hover img{transform:scale(1.07);}
+.category-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(18,42,31,0.85) 0%,rgba(18,42,31,0.1) 60%,transparent 100%);}
+.category-card-content{position:absolute;bottom:0;right:0;left:0;padding:24px;}
+.category-card-icon{width:44px;height:44px;background:rgba(200,149,108,0.25);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--secondary-light);font-size:18px;margin-bottom:10px;border:1px solid rgba(200,149,108,0.3);}
+.category-card-content h3{color:var(--white);font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:4px;}
+.category-card-content p{color:rgba(255,255,255,0.7);font-size:13px;}
+.category-card:hover .category-card-overlay{background:linear-gradient(to top,rgba(27,61,47,0.92) 0%,rgba(27,61,47,0.2) 60%,transparent 100%);}
+.category-explore{position:absolute;top:16px;left:16px;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);color:var(--white);padding:6px 14px;border-radius:50px;font-size:12px;font-weight:600;opacity:0;transition:var(--transition);}
+.category-card:hover .category-explore{opacity:1;}
+
+/* ===== PRODUCT SECTION ===== */
+.products-section{padding:80px 0;}
+.products-section:nth-child(even){background:var(--bg-light);}
+.products-section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;flex-wrap:wrap;gap:16px;}
+.products-section-header .title-wrap h2{font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,34px);font-weight:700;color:var(--primary);display:flex;align-items:center;gap:14px;}
+.products-section-header .title-wrap h2 .cat-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--primary),var(--primary-light));border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--secondary-light);font-size:18px;flex-shrink:0;}
+.products-section-header .title-wrap p{color:var(--text-light);font-size:15px;margin-top:6px;margin-right:58px;}
+.view-all-btn{display:flex;align-items:center;gap:8px;color:var(--primary);font-weight:700;font-size:14px;background:transparent;padding:10px 20px;border:2px solid var(--primary);border-radius:50px;transition:var(--transition);}
+.view-all-btn:hover{background:var(--primary);color:var(--white);}
+.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+@media(max-width:1100px){.products-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:600px){.products-grid{grid-template-columns:1fr;}}
+
+/* ===== PRODUCT CARD ===== */
+.product-card{background:var(--card-bg);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 15px var(--shadow);transition:var(--transition);cursor:pointer;border:1px solid rgba(27,61,47,0.06);}
+.product-card:hover{transform:translateY(-6px);box-shadow:0 12px 35px var(--shadow-deep);}
+.product-img-wrap{position:relative;overflow:hidden;aspect-ratio:4/3;}
+.product-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;}
+.product-card:hover .product-img-wrap img{transform:scale(1.06);}
+.product-badge{position:absolute;top:12px;right:12px;background:var(--primary);color:var(--white);font-size:11px;font-weight:700;padding:4px 12px;border-radius:50px;letter-spacing:0.5px;}
+.product-badge.new{background:linear-gradient(135deg,#2A7A5E,#1B3D2F);}
+.product-badge.sale{background:linear-gradient(135deg,#C8956C,#A07040);}
+.product-body{padding:18px 18px 14px;}
+.product-cat-label{font-size:11px;font-weight:600;color:var(--secondary);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;}
+.product-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--primary);margin-bottom:8px;line-height:1.3;}
+.product-desc{font-size:13px;color:var(--text-light);line-height:1.7;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.product-rating{display:flex;align-items:center;gap:6px;margin-bottom:12px;}
+.stars{display:flex;gap:2px;}
+.stars i{font-size:12px;color:#E8B84B;}
+.stars i.empty{color:var(--border);}
+.rating-count{font-size:12px;color:var(--text-muted);}
+.product-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);padding-top:14px;margin-top:4px;}
+.product-price{font-family:'Playfair Display',serif;}
+.product-price .price{font-size:22px;font-weight:700;color:var(--primary);}
+.product-price .currency{font-size:14px;font-weight:600;color:var(--text-light);margin-right:2px;}
+.product-price .old-price{font-size:13px;color:var(--text-muted);text-decoration:line-through;display:block;}
+.btn-inquire{display:flex;align-items:center;gap:7px;background:linear-gradient(135deg,#25D366,#1DAA57);color:var(--white);padding:10px 16px;border-radius:50px;font-size:13px;font-weight:700;transition:var(--transition);white-space:nowrap;}
+.btn-inquire:hover{transform:scale(1.05);box-shadow:0 4px 15px rgba(37,211,102,0.35);}
+.btn-inquire i{font-size:15px;}
+
+/* ===== ABOUT SECTION ===== */
+.about-section{padding:100px 0;background:var(--primary);position:relative;overflow:hidden;}
+.about-section::before{content:'';position:absolute;top:-100px;left:-100px;width:400px;height:400px;background:rgba(200,149,108,0.08);border-radius:50%;pointer-events:none;}
+.about-section::after{content:'';position:absolute;bottom:-80px;right:-80px;width:300px;height:300px;background:rgba(200,149,108,0.06);border-radius:50%;pointer-events:none;}
+.about-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+@media(max-width:800px){.about-inner{grid-template-columns:1fr;gap:40px;}}
+.about-img-wrap{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:1;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
+.about-img-wrap img{width:100%;height:100%;object-fit:cover;}
+.about-img-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(200,149,108,0.15),transparent);}
+.about-badge{position:absolute;bottom:24px;right:24px;background:rgba(255,255,255,0.12);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.2);border-radius:12px;padding:16px 20px;text-align:center;}
+.about-badge span{display:block;font-family:'Playfair Display',serif;font-size:36px;font-weight:800;color:var(--secondary-light);}
+.about-badge small{color:rgba(255,255,255,0.7);font-size:12px;}
+.about-content .section-label{border-color:rgba(200,149,108,0.3);}
+.about-content .section-title{color:var(--white);}
+.about-content .section-desc{color:rgba(255,255,255,0.72);}
+.about-content .section-divider{margin:18px 0 28px;}
+.about-features{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px;}
+.about-feature{display:flex;align-items:flex-start;gap:14px;background:rgba(255,255,255,0.07);border-radius:12px;padding:16px;}
+.about-feature-icon{width:40px;height:40px;background:rgba(200,149,108,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--secondary-light);font-size:17px;flex-shrink:0;}
+.about-feature-text h4{color:var(--white);font-size:14px;font-weight:700;margin-bottom:2px;}
+.about-feature-text p{color:rgba(255,255,255,0.6);font-size:12px;}
+
+/* ===== SERVICES SECTION ===== */
+.services-section{padding:90px 0;background:var(--bg);}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+@media(max-width:900px){.services-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:560px){.services-grid{grid-template-columns:1fr;}}
+.service-card{background:var(--card-bg);border-radius:var(--radius);padding:36px 28px;border:1px solid var(--border);transition:var(--transition);text-align:center;}
+.service-card:hover{border-color:var(--primary-light);transform:translateY(-5px);box-shadow:0 10px 30px var(--shadow);}
+.service-icon{width:66px;height:66px;background:linear-gradient(135deg,var(--primary),var(--primary-light));border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--secondary-light);margin:0 auto 20px;}
+.service-card h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--primary);margin-bottom:12px;}
+.service-card p{color:var(--text-light);font-size:14px;line-height:1.8;}
+
+/* ===== CONTACT SECTION ===== */
+.contact-section{padding:90px 0;background:var(--bg-light);}
+.contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+@media(max-width:800px){.contact-inner{grid-template-columns:1fr;gap:40px;}}
+.contact-info{display:flex;flex-direction:column;gap:20px;}
+.contact-card{display:flex;align-items:center;gap:18px;background:var(--card-bg);border-radius:var(--radius);padding:20px 24px;border:1px solid var(--border);transition:var(--transition);}
+.contact-card:hover{border-color:var(--secondary);transform:translateX(-4px);}
+.contact-card a{text-decoration:none;color:inherit;display:flex;align-items:center;gap:18px;width:100%;}
+.contact-icon{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.contact-icon.wa{background:#E8F8EE;color:#25D366;}
+.contact-icon.fb{background:#E8F0FB;color:#1877F2;}
+.contact-icon.ig{background:#FBE8F0;color:#E1306C;}
+.contact-icon.map{background:#F0F4F8;color:var(--primary);}
+.contact-text h4{font-weight:700;color:var(--primary);font-size:15px;}
+.contact-text p{color:var(--text-light);font-size:13px;}
+.contact-map{border-radius:var(--radius);overflow:hidden;aspect-ratio:16/10;background:var(--bg-dark);display:flex;align-items:center;justify-content:center;position:relative;}
+.map-placeholder{text-align:center;color:var(--text-muted);}
+.map-placeholder i{font-size:48px;color:var(--primary-light);margin-bottom:12px;}
+.map-placeholder p{font-size:14px;}
+
+/* ===== STATS STRIP ===== */
+.stats-strip{background:linear-gradient(135deg,var(--primary),var(--primary-light));padding:50px 0;}
+.stats-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:center;}
+@media(max-width:700px){.stats-inner{grid-template-columns:repeat(2,1fr);}}
+.stat-item h3{font-family:'Playfair Display',serif;font-size:clamp(30px,4vw,48px);font-weight:800;color:var(--secondary-light);margin-bottom:6px;}
+.stat-item p{color:rgba(255,255,255,0.75);font-size:14px;font-weight:500;}
+
+/* ===== FOOTER ===== */
+.footer{background:var(--primary-dark);padding:60px 0 0;}
+.footer-inner{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px;}
+@media(max-width:1000px){.footer-inner{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.footer-inner{grid-template-columns:1fr;}}
+.footer-brand .logo-text h1{font-size:30px;}
+.footer-brand p{color:rgba(255,255,255,0.6);font-size:14px;margin-top:16px;line-height:1.8;max-width:280px;}
+.footer-social{display:flex;gap:10px;margin-top:24px;}
+.social-btn{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7);font-size:16px;transition:var(--transition);border:1px solid rgba(255,255,255,0.1);}
+.social-btn:hover{background:var(--secondary);color:var(--white);border-color:var(--secondary);}
+.footer-col h4{color:var(--white);font-weight:700;font-size:16px;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.1);}
+.footer-col ul li{margin-bottom:10px;}
+.footer-col ul li a{color:rgba(255,255,255,0.6);font-size:14px;transition:var(--transition);display:flex;align-items:center;gap:8px;}
+.footer-col ul li a:hover{color:var(--secondary-light);padding-right:4px;}
+.footer-col ul li a i{font-size:11px;}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding:20px 0;text-align:center;}
+.footer-bottom p{color:rgba(255,255,255,0.4);font-size:13px;}
+.footer-bottom span{color:var(--secondary-light);}
+
+/* ===== FLOATING WHATSAPP ===== */
+.float-wa{position:fixed;bottom:28px;left:28px;z-index:900;display:flex;flex-direction:column;align-items:flex-start;gap:10px;}
+.float-wa-btn{width:58px;height:58px;background:linear-gradient(135deg,#25D366,#1DA851);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--white);box-shadow:0 4px 20px rgba(37,211,102,0.4);transition:var(--transition);animation:waPulse 2.5s infinite;}
+.float-wa-btn:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(37,211,102,0.55);}
+.float-wa-label{background:var(--primary-dark);color:var(--white);font-size:12px;font-weight:600;padding:6px 14px;border-radius:8px;opacity:0;transform:translateX(10px);transition:var(--transition);pointer-events:none;white-space:nowrap;}
+.float-wa:hover .float-wa-label{opacity:1;transform:translateX(0);}
+@keyframes waPulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.4);}50%{box-shadow:0 4px 40px rgba(37,211,102,0.7);}}
+
+/* ===== SCROLL TO TOP ===== */
+.scroll-top{position:fixed;bottom:28px;right:28px;width:48px;height:48px;background:var(--primary);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 15px var(--shadow-deep);transition:var(--transition);opacity:0;pointer-events:none;z-index:900;}
+.scroll-top.visible{opacity:1;pointer-events:all;}
+.scroll-top:hover{background:var(--primary-light);transform:translateY(-3px);}
+
+/* ===== PRODUCT MODAL ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(18,42,31,0.8);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.3s ease;backdrop-filter:blur(6px);}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{background:var(--card-bg);border-radius:20px;width:100%;max-width:840px;max-height:90vh;overflow-y:auto;transform:translateY(30px) scale(0.97);transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);box-shadow:0 30px 80px rgba(0,0,0,0.25);}
+.modal-overlay.open .modal{transform:translateY(0) scale(1);}
+.modal-header{position:sticky;top:0;background:var(--card-bg);border-bottom:1px solid var(--border);padding:20px 28px;display:flex;align-items:center;justify-content:space-between;z-index:10;}
+.modal-header h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--primary);}
+.modal-close{width:36px;height:36px;border-radius:50%;background:var(--bg-dark);color:var(--text);display:flex;align-items:center;justify-content:center;font-size:15px;transition:var(--transition);}
+.modal-close:hover{background:var(--primary);color:var(--white);}
+.modal-body{display:grid;grid-template-columns:1.2fr 1fr;gap:32px;padding:32px;}
+@media(max-width:640px){.modal-body{grid-template-columns:1fr;}}
+.modal-img{border-radius:14px;overflow:hidden;aspect-ratio:1;background:var(--bg-dark);}
+.modal-img img{width:100%;height:100%;object-fit:cover;}
+.modal-info h2{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--primary);margin-bottom:10px;}
+.modal-info .modal-cat{font-size:12px;font-weight:700;color:var(--secondary);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;}
+.modal-info .modal-desc{font-size:14px;color:var(--text-light);line-height:1.9;margin-bottom:18px;}
+.modal-info .modal-price-row{display:flex;align-items:center;gap:16px;margin-bottom:22px;}
+.modal-price-big{font-family:'Playfair Display',serif;font-size:34px;font-weight:800;color:var(--primary);}
+.modal-price-currency{font-size:16px;color:var(--text-light);margin-right:4px;}
+.modal-info .btn-wa-big{display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#25D366,#1DA851);color:var(--white);padding:16px 28px;border-radius:14px;font-size:16px;font-weight:700;transition:var(--transition);width:100%;}
+.modal-info .btn-wa-big:hover{transform:translateY(-2px);box-shadow:0 6px 25px rgba(37,211,102,0.4);}
+
+/* ===== ADMIN PANEL ===== */
+.admin-overlay{position:fixed;inset:0;background:rgba(10,20,15,0.92);z-index:3000;display:none;backdrop-filter:blur(8px);}
+.admin-overlay.open{display:block;}
+.admin-panel{position:fixed;top:0;bottom:0;left:0;width:380px;background:var(--primary-dark);z-index:3001;overflow-y:auto;transform:translateX(-100%);transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);}
+.admin-overlay.open .admin-panel{transform:translateX(0);}
+.admin-header{background:rgba(0,0,0,0.3);padding:24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.1);}
+.admin-header h2{color:var(--white);font-family:'Playfair Display',serif;font-size:20px;display:flex;align-items:center;gap:10px;}
+.admin-close{color:rgba(255,255,255,0.6);font-size:20px;background:transparent;transition:var(--transition);}
+.admin-close:hover{color:var(--white);}
+.admin-body{padding:24px;}
+.admin-section{margin-bottom:32px;}
+.admin-section-title{color:var(--secondary-light);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08);}
+.admin-form{display:flex;flex-direction:column;gap:12px;}
+.admin-input{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:var(--white);padding:12px 14px;border-radius:8px;font-family:'Tajawal',sans-serif;font-size:14px;transition:var(--transition);}
+.admin-input:focus{outline:none;border-color:var(--secondary);background:rgba(255,255,255,0.12);}
+.admin-input::placeholder{color:rgba(255,255,255,0.35);}
+.admin-select{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:var(--white);padding:12px 14px;border-radius:8px;font-family:'Tajawal',sans-serif;font-size:14px;}
+.admin-select option{background:var(--primary-dark);color:var(--white);}
+.btn-admin-add{background:linear-gradient(135deg,var(--secondary),var(--secondary-light));color:var(--white);padding:12px 20px;border-radius:8px;font-size:14px;font-weight:700;transition:var(--transition);width:100%;}
+.btn-admin-add:hover{transform:translateY(-2px);box-shadow:0 4px 15px rgba(200,149,108,0.35);}
+.admin-product-list{display:flex;flex-direction:column;gap:10px;max-height:300px;overflow-y:auto;}
+.admin-product-item{background:rgba(255,255,255,0.06);border-radius:10px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(255,255,255,0.08);}
+.admin-product-item img{width:44px;height:44px;object-fit:cover;border-radius:6px;flex-shrink:0;}
+.admin-product-item-info{flex:1;padding:0 12px;}
+.admin-product-item-info h5{color:var(--white);font-size:13px;font-weight:600;}
+.admin-product-item-info span{color:rgba(255,255,255,0.5);font-size:12px;}
+.btn-delete{background:rgba(220,53,69,0.2);color:#ff6b7a;border-radius:6px;padding:6px 10px;font-size:12px;transition:var(--transition);}
+.btn-delete:hover{background:rgba(220,53,69,0.4);}
+.admin-cat-list{display:flex;flex-direction:column;gap:8px;}
+.admin-cat-item{background:rgba(255,255,255,0.06);border-radius:10px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(255,255,255,0.08);}
+.admin-cat-item span{color:var(--white);font-size:14px;font-weight:500;}
+.admin-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.admin-stat-box{background:rgba(255,255,255,0.06);border-radius:10px;padding:16px;text-align:center;border:1px solid rgba(255,255,255,0.1);}
+.admin-stat-box h3{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--secondary-light);}
+.admin-stat-box p{color:rgba(255,255,255,0.5);font-size:12px;margin-top:2px;}
+.admin-password-screen{padding:48px 24px;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center;}
+.admin-password-screen i{font-size:48px;color:var(--secondary-light);}
+.admin-password-screen h3{color:var(--white);font-size:20px;}
+.admin-password-screen p{color:rgba(255,255,255,0.5);font-size:14px;}
+.admin-password-input-wrap{width:100%;display:flex;flex-direction:column;gap:10px;}
+.btn-unlock{background:linear-gradient(135deg,var(--secondary),var(--secondary-light));color:var(--white);padding:14px;border-radius:8px;font-size:15px;font-weight:700;width:100%;transition:var(--transition);}
+.btn-unlock:hover{transform:translateY(-2px);}
+.admin-err{color:#ff6b7a;font-size:13px;}
+/* notification */
+.notif{position:fixed;top:90px;right:24px;background:var(--primary);color:var(--white);padding:14px 20px;border-radius:10px;font-size:14px;font-weight:600;z-index:4000;transform:translateX(120%);transition:transform 0.4s ease;box-shadow:0 4px 20px var(--shadow-deep);display:flex;align-items:center;gap:10px;border-right:4px solid var(--secondary);}
+.notif.show{transform:translateX(0);}
+.notif.success{border-right-color:#25D366;}
+.notif.error{border-right-color:#ff4757;}
+
+/* ===== RESPONSIVE FIXES ===== */
+@media(max-width:1024px){.nav{display:none;}.menu-toggle{display:flex;}}
+@media(max-width:768px){
+  .header-inner{padding:0 16px;}
+  .hero{height:80vh;min-height:500px;}
+  .slide-content{right:5%;max-width:90%;}
+  .stats-inner{gap:20px;}
+  .about-features{grid-template-columns:1fr;}
+  .container{padding:0 16px;}
+}
+@media(max-width:480px){
+  .products-section-header{flex-direction:column;align-items:flex-start;}
+  .float-wa{bottom:16px;left:16px;}
+  .scroll-top{bottom:16px;right:16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NOTIFICATION -->
+<div class="notif" id="notif"><i class="fas fa-check-circle"></i><span id="notif-msg"></span></div>
+
+<!-- HEADER -->
+<header class="header" id="header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon"><i class="fas fa-couch"></i></div>
+      <div class="logo-text">
+        <h1>Dayoub</h1>
+        <span>أثاث فاخر</span>
+      </div>
+    </div>
+    <nav class="nav">
+      <a href="#home" class="active">الرئيسية</a>
+      <a href="#categories">أقسامنا</a>
+      <a href="#products-lighting">المنتجات</a>
+      <a href="#services">خدماتنا</a>
+      <a href="#about">من نحن</a>
+      <a href="#contact">تواصل معنا</a>
+    </nav>
+    <div class="header-actions">
+      <button class="btn-admin" onclick="openAdmin()"><i class="fas fa-cog"></i> لوحة التحكم</button>
+      <button class="menu-toggle" id="menuToggle" onclick="toggleMobileMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE NAV -->
+<nav class="mobile-nav" id="mobileNav">
+  <a href="#home" onclick="closeMobileMenu()">الرئيسية</a>
+  <a href="#categories" onclick="closeMobileMenu()">أقسامنا</a>
+  <a href="#products-lighting" onclick="closeMobileMenu()">المنتجات</a>
+  <a href="#services" onclick="closeMobileMenu()">خدماتنا</a>
+  <a href="#about" onclick="closeMobileMenu()">من نحن</a>
+  <a href="#contact" onclick="closeMobileMenu()">تواصل معنا</a>
+  <a href="https://wa.me/963000000000" target="_blank" style="color:#25D366"><i class="fab fa-whatsapp"></i> واتساب</a>
+</nav>
+
+<!-- HERO SLIDER -->
+<section class="hero" id="home">
+  <div class="slides-wrapper" id="slidesWrapper">
+    <!-- slides rendered by JS -->
+  </div>
+  <div class="hero-indicators" id="heroIndicators"></div>
+  <div class="hero-scroll"><i class="fas fa-chevron-down"></i></div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories-section" id="categories">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">تصفح مجموعاتنا</span>
+      <h2 class="section-title">أقسام المتجر</h2>
+      <p class="section-desc">اكتشف مجموعتنا الواسعة من الأثاث الفاخر والمفروشات عالية الجودة لكل ركن من أركان منزلك</p>
+      <div class="section-divider"></div>
+    </div>
+    <div class="categories-grid" id="categoriesGrid"></div>
+  </div>
+</section>
+
+<!-- PRODUCT SECTIONS - rendered by JS -->
+<div id="productSections"></div>
+
+<!-- STATS -->
+<section class="stats-strip">
+  <div class="container">
+    <div class="stats-inner">
+      <div class="stat-item"><h3>15+</h3><p>سنة خبرة في المجال</p></div>
+      <div class="stat-item"><h3>5000+</h3><p>عميل سعيد</p></div>
+      <div class="stat-item"><h3>1200+</h3><p>منتج فاخر</p></div>
+      <div class="stat-item"><h3>98%</h3><p>نسبة رضا العملاء</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-img-wrap">
+        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=700&q=85" alt="Dayoub مشغل" loading="lazy">
+        <div class="about-img-overlay"></div>
+        <div class="about-badge">
+          <span>15+</span>
+          <small>سنة من التميز</small>
+        </div>
+      </div>
+      <div class="about-content">
+        <span class="section-label">من نحن</span>
+        <h2 class="section-title">Dayoub للأثاث والمفروشات الفاخرة</h2>
+        <p class="section-desc">نحن شركة رائدة في مجال الأثاث المنزلي الفاخر، نؤمن بأن كل بيت يستحق لمسة من الأناقة والجمال. منذ تأسيسنا، ونحن نقدم منتجات استثنائية تجمع بين الجودة العالية والتصميم الراقي، لتحويل منزلك إلى مساحة حياة فريدة من نوعها.</p>
+        <div class="section-divider"></div>
+        <p style="color:rgba(255,255,255,0.7);font-size:15px;margin-top:16px;line-height:1.8;">نعمل مع أمهر الحرفيين والمصممين المحليين والعالميين لنوفر لكم أفضل القطع الأثرية الحديثة والكلاسيكية، مع ضمان التوصيل والتركيب في جميع أنحاء البلاد.</p>
+        <div class="about-features">
+          <div class="about-feature">
+            <div class="about-feature-icon"><i class="fas fa-medal"></i></div>
+            <div class="about-feature-text"><h4>جودة مضمونة</h4><p>ضمان 5 سنوات على جميع المنتجات</p></div>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon"><i class="fas fa-truck"></i></div>
+            <div class="about-feature-text"><h4>توصيل مجاني</h4><p>لجميع المحافظات</p></div>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon"><i class="fas fa-palette"></i></div>
+            <div class="about-feature-text"><h4>تصميم مخصص</h4><p>نصمم حسب طلبك</p></div>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon"><i class="fas fa-headset"></i></div>
+            <div class="about-feature-text"><h4>دعم 24/7</h4><p>فريق خدمة دائم</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">ما نقدمه</span>
+      <h2 class="section-title">خدماتنا المتميزة</h2>
+      <p class="section-desc">نقدم باقة شاملة من الخدمات لضمان حصولك على أفضل تجربة تسوق وتأثيث</p>
+      <div class="section-divider"></div>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-pencil-ruler"></i></div>
+        <h3>تصميم داخلي</h3>
+        <p>فريق من المصممين المحترفين يساعدك في اختيار وتنسيق الأثاث المثالي لمنزلك حسب مساحتك وذوقك</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-truck-loading"></i></div>
+        <h3>توصيل وتركيب</h3>
+        <p>نوصّل ونركّب جميع المنتجات بشكل احترافي على يد فريق متخصص في جميع أنحاء البلاد مجاناً</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-tools"></i></div>
+        <h3>صيانة وإصلاح</h3>
+        <p>خدمة صيانة دورية وإصلاح للأثاث لضمان بقائه في أفضل حالة مع ضمان موسّع على جميع المنتجات</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-layer-group"></i></div>
+        <h3>طلبات مخصصة</h3>
+        <p>نقبل الطلبات المخصصة لتصنيع أثاث حسب مواصفاتك من حيث الشكل واللون والمواد المستخدمة</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-exchange-alt"></i></div>
+        <h3>استبدال وإرجاع</h3>
+        <p>سياسة إرجاع مرنة خلال 14 يوماً مع إمكانية الاستبدال المجاني في حال وجود أي عيب في المنتج</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-percent"></i></div>
+        <h3>عروض وتقسيط</h3>
+        <p>عروض حصرية ومستمرة مع إمكانية التقسيط بدون فوائد على جميع المنتجات لتسهيل عملية الشراء</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">تواصل معنا</span>
+      <h2 class="section-title">نحن هنا لخدمتك</h2>
+      <p class="section-desc">تواصل معنا عبر أي من قنوات التواصل التالية وسيرد عليك فريقنا في أقرب وقت ممكن</p>
+      <div class="section-divider"></div>
+    </div>
+    <div class="contact-inner">
+      <div class="contact-info">
+        <div class="contact-card">
+          <a href="https://wa.me/963000000000" target="_blank">
+            <div class="contact-icon wa"><i class="fab fa-whatsapp"></i></div>
+            <div class="contact-text"><h4>واتساب</h4><p>تواصل معنا مباشرة عبر واتساب</p></div>
+            <i class="fas fa-arrow-left" style="color:var(--text-muted);margin-right:auto"></i>
+          </a>
+        </div>
+        <div class="contact-card">
+          <a href="https://facebook.com/DayoubFurniture" target="_blank">
+            <div class="contact-icon fb"><i class="fab fa-facebook-f"></i></div>
+            <div class="contact-text"><h4>فيسبوك</h4><p>تابعنا على صفحتنا الرسمية</p></div>
+            <i class="fas fa-arrow-left" style="color:var(--text-muted);margin-right:auto"></i>
+          </a>
+        </div>
+        <div class="contact-card">
+          <a href="https://instagram.com/DayoubFurniture" target="_blank">
+            <div class="contact-icon ig"><i class="fab fa-instagram"></i></div>
+            <div class="contact-text"><h4>إنستجرام</h4><p>شاهد أحدث أعمالنا وإلهاماتنا</p></div>
+            <i class="fas fa-arrow-left" style="color:var(--text-muted);margin-right:auto"></i>
+          </a>
+        </div>
+        <div class="contact-card">
+          <a href="#">
+            <div class="contact-icon map"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="contact-text"><h4>العنوان</h4><p>دمشق - سوريا | المعرض الرئيسي</p></div>
+            <i class="fas fa-arrow-left" style="color:var(--text-muted);margin-right:auto"></i>
+          </a>
+        </div>
+      </div>
+      <div class="contact-map">
+        <div class="map-placeholder">
+          <i class="fas fa-map-marked-alt"></i>
+          <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--primary);margin-bottom:8px;">Dayoub Furniture</h3>
+          <p>دمشق، سوريا</p>
+          <a href="https://wa.me/963000000000" target="_blank" class="btn-primary" style="margin-top:20px;font-size:14px;">
+            <i class="fab fa-whatsapp"></i> تواصل الآن
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-icon"><i class="fas fa-couch"></i></div>
+          <div class="logo-text">
+            <h1>Dayoub</h1>
+            <span style="color:var(--secondary-light)">أثاث فاخر</span>
+          </div>
+        </div>
+        <p>نحن نصنع الجمال لمنزلك، نوفر أرقى المفروشات والأثاث الفاخر بجودة استثنائية لتحويل منزلك إلى ملاذ من الأناقة والراحة.</p>
+        <div class="footer-social">
+          <a href="https://wa.me/963000000000" class="social-btn" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://facebook.com/DayoubFurniture" class="social-btn" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://instagram.com/DayoubFurniture" class="social-btn" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>روابط سريعة</h4>
+        <ul>
+          <li><a href="#home"><i class="fas fa-chevron-left"></i>الرئيسية</a></li>
+          <li><a href="#categories"><i class="fas fa-chevron-left"></i>أقسامنا</a></li>
+          <li><a href="#about"><i class="fas fa-chevron-left"></i>من نحن</a></li>
+          <li><a href="#services"><i class="fas fa-chevron-left"></i>خدماتنا</a></li>
+          <li><a href="#contact"><i class="fas fa-chevron-left"></i>تواصل معنا</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>الأقسام</h4>
+        <ul id="footerCats">
+          <!-- rendered by JS -->
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>معلومات</h4>
+        <ul>
+          <li><a href="#"><i class="fas fa-chevron-left"></i>سياسة الإرجاع</a></li>
+          <li><a href="#"><i class="fas fa-chevron-left"></i>الشحن والتوصيل</a></li>
+          <li><a href="#"><i class="fas fa-chevron-left"></i>ضمان المنتجات</a></li>
+          <li><a href="#"><i class="fas fa-chevron-left"></i>الأسئلة الشائعة</a></li>
+          <li><a href="#"><i class="fas fa-chevron-left"></i>الشروط والأحكام</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p>© 2024 <span>Dayoub Furniture</span> — جميع الحقوق محفوظة | صُنع بـ <span>❤</span> في سوريا</p>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<div class="float-wa">
+  <div class="float-wa-label">تواصل معنا عبر واتساب</div>
+  <a href="https://wa.me/963000000000" class="float-wa-btn" target="_blank"><i class="fab fa-whatsapp"></i></a>
+</div>
+
+<!-- SCROLL TOP -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">تفاصيل المنتج</h3>
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-img"><img id="modalImg" src="" alt=""></div>
+      <div class="modal-info">
+        <div class="modal-cat" id="modalCat"></div>
+        <h2 id="modalName"></h2>
+        <p class="modal-desc" id="modalDesc"></p>
+        <div id="modalRating" class="product-rating"></div>
+        <div class="modal-price-row">
+          <div class="modal-price-big">
+            <span class="modal-price-currency">$</span>
+            <span id="modalPrice"></span>
+          </div>
+        </div>
+        <a id="modalWaBtn" href="#" class="btn-wa-big" target="_blank">
+          <i class="fab fa-whatsapp" style="font-size:20px"></i>
+          استفسر عن هذا المنتج
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN OVERLAY -->
+<div class="admin-overlay" id="adminOverlay" onclick="handleAdminOverlayClick(event)">
+  <div class="admin-panel" id="adminPanel">
+    <!-- rendered by JS -->
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const WA_NUMBER = '963000000000';
+
+const heroSlides = [
+  {
+    img: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1600&q=85',
+    title: 'اصنع منزل أحلامك',
+    sub: 'مجموعة حصرية من أرقى قطع الأثاث الفاخر بتصاميم عصرية وكلاسيكية لكل ذوق',
+    btn: 'تصفح المجموعة'
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=1600&q=85',
+    title: 'غرف نوم الأحلام',
+    sub: 'أرقى تشكيلة من أسرة النوم الفاخرة لتمنحك نوماً هادئاً ومريحاً',
+    btn: 'استكشف الآن'
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1600&q=85',
+    title: 'صالات جلوس فاخرة',
+    sub: 'كنبات ومقاعد فاخرة لصالون يعكس ذوقك الرفيع ويجمع أفراد عائلتك',
+    btn: 'تسوق الكنبات'
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1449247709967-d4461a6a6103?w=1600&q=85',
+    title: 'غرف طعام راقية',
+    sub: 'طاولات وكراسي غرف الطعام بأناقة لا مثيل لها لجلسات العائلة المميزة',
+    btn: 'شاهد المجموعة'
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1600&q=85',
+    title: 'إنارة تكمل الأناقة',
+    sub: 'ثريات ومصابيح ديكورية فاخرة تضيف بريقاً استثنائياً لكل ركن في منزلك',
+    btn: 'تصفح الإنارة'
+  }
+];
+
+let categories = [
+  {
+    id: 'lighting',
+    name: 'الإنارة',
+    icon: 'fa-lightbulb',
+    count: 6,
+    image: 'https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=700&q=80'
+  },
+  {
+    id: 'beds',
+    name: 'غرف النوم',
+    icon: 'fa-bed',
+    count: 6,
+    image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=700&q=80'
+  },
+  {
+    id: 'doors',
+    name: 'الأبواب',
+    icon: 'fa-door-open',
+    count: 6,
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=80'
+  },
+  {
+    id: 'wardrobes',
+    name: 'الخزانات',
+    icon: 'fa-border-all',
+    count: 6,
+    image: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbe?w=700&q=80'
+  },
+  {
+    id: 'sofas',
+    name: 'الكنبات',
+    icon: 'fa-couch',
+    count: 6,
+    image: 'https://images.unsplash.com/photo-1567016432779-094069958ea5?w=700&q=80'
+  },
+  {
+    id: 'dining',
+    name: 'غرف الطعام',
+    icon: 'fa-utensils',
+    count: 6,
+    image: 'https://images.unsplash.com/photo-1617806691559-27e0f1d4a4f3?w=700&q=80'
+  }
+];
+
+let products = [
+  // ---- LIGHTING ----
+  { id:'l1', cat:'lighting', name:'ثريا كلاسيكية رومانية', desc:'ثريا فاخرة مستوحاة من التصاميم الرومانية الكلاسيكية، مصنوعة من النحاس الأصيل مع زجاج كريستال مقطوع يعكس الضوء بأشكال ساحرة. مثالية لصالات الاستقبال الكبيرة.', price:1250, oldPrice:1500, rating:4.9, reviews:128, badge:'الأكثر مبيعاً', img:'https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=600&q=80' },
+  { id:'l2', cat:'lighting', name:'مصباح أرضي معاصر', desc:'مصباح أرضي بتصميم عصري أنيق، قابل للتعديل في الارتفاع والاتجاه، يمنح إضاءة دافئة ومريحة لركن القراءة أو الصالون.', price:320, oldPrice:null, rating:4.7, reviews:89, badge:'', img:'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600&q=80' },
+  { id:'l3', cat:'lighting', name:'مجموعة مصابيح معلقة', desc:'مجموعة من 3 مصابيح معلقة بتصميم صناعي راقٍ، مثالية فوق طاولة الطعام أو جزيرة المطبخ، تضيف لمسة دراما بصرية مميزة.', price:580, oldPrice:680, rating:4.8, reviews:54, badge:'جديد', img:'https://images.unsplash.com/photo-1513506003901-1e6a35dbb7a9?w=600&q=80' },
+  { id:'l4', cat:'lighting', name:'إضاءة جدارية LED', desc:'شريط إضاءة جدارية LED بتقنية حديثة، 16 مليون لون مع تحكم ذكي عبر التطبيق، تخلق أجواء رومانسية أو احتفالية بلمسة واحدة.', price:195, oldPrice:null, rating:4.6, reviews:211, badge:'', img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80' },
+  { id:'l5', cat:'lighting', name:'ثريا فاخرة مودرن', desc:'ثريا ذهبية بخطوط هندسية نظيفة تمزج بين الكلاسيكية والمعاصرة، قطر 90 سم، مثالية للمداخل الأنيقة والصالات الواسعة.', price:890, oldPrice:1100, rating:5.0, reviews:33, badge:'حصري', img:'https://images.unsplash.com/photo-1573552348650-c5ef07e8cf31?w=600&q=80' },
+  { id:'l6', cat:'lighting', name:'مصباح طاولة كريستال', desc:'مصباح طاولة فاخر بقاعدة كريستالية شفافة، مع أبجورة من الحرير الطبيعي، يضيف لمسة من الرقي والأناقة لغرفة النوم أو الصالون.', price:265, oldPrice:null, rating:4.5, reviews:67, badge:'', img:'https://images.unsplash.com/photo-1572278017823-d3a21e069d31?w=600&q=80' },
+  // ---- BEDS ----
+  { id:'b1', cat:'beds', name:'سرير ملكي نيوكلاسيك', desc:'سرير ملكي فاخر مصنوع من خشب الزان الأوروبي المنحوت يدوياً، مع تنجيد من الجلد الإيطالي الأصيل. يحول غرفة نومك إلى قصر خاص بك.', price:2100, oldPrice:2500, rating:4.9, reviews:76, badge:'الأفضل قيمة', img:'https://images.unsplash.com/photo-1505693314120-0d443867891c?w=600&q=80' },
+  { id:'b2', cat:'beds', name:'سرير مودرن منصة خشب', desc:'سرير عصري بتصميم منصة منخفض، مصنوع من خشب الجوز الأمريكي، يمنح غرفة نومك مظهراً هادئاً وراقياً بأسلوب اسكندنافي.', price:1450, oldPrice:null, rating:4.7, reviews:108, badge:'', img:'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80' },
+  { id:'b3', cat:'beds', name:'سرير مبطن بالمخمل', desc:'سرير فاخر مبطن بالمخمل الناعم بألوان موضة 2024، مع رأسية مزخرفة بأزرار ذهبية، لمسة دافئة وفارهة في منتهى الأناقة.', price:1780, oldPrice:2100, rating:4.8, reviews:52, badge:'جديد', img:'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=600&q=80' },
+  { id:'b4', cat:'beds', name:'طقم غرفة نوم كامل', desc:'طقم غرفة نوم متكامل يشمل السرير وخزانة الملابس والتسريحة وخزانتي السرير، بتصميم موحد من خشب الصنوبر الأصيل.', price:4200, oldPrice:5000, rating:4.6, reviews:29, badge:'عرض', img:'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=600&q=80' },
+  { id:'b5', cat:'beds', name:'سرير مع تخزين ذكي', desc:'سرير عملي وأنيق مع درج تخزين تحت الفراش، مصنوع من خشب HDF عالي الجودة، حل مثالي لغرف النوم الصغيرة دون المساس بالأناقة.', price:950, oldPrice:null, rating:4.5, reviews:143, badge:'', img:'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&q=80' },
+  { id:'b6', cat:'beds', name:'سرير أطفال خشبي فاخر', desc:'سرير أطفال مصنوع من خشب الزان الطبيعي المعالج بدهانات آمنة، تصميم مرح ومبدع يحفز خيال طفلك ويضمن نوماً هنيئاً.', price:680, oldPrice:820, rating:4.8, reviews:88, badge:'', img:'https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&q=80' },
+  // ---- DOORS ----
+  { id:'d1', cat:'doors', name:'باب خشبي كلاسيكي', desc:'باب رئيسي فاخر من خشب الماهوجني الأصيل مع نقوش يدوية كلاسيكية وإطار نحاسي لامع، يجعل مدخل منزلك تحفة فنية حقيقية.', price:1800, oldPrice:2200, rating:4.9, reviews:41, badge:'', img:'https://images.unsplash.com/photo-1558618047-3d36c3fee4c7?w=600&q=80' },
+  { id:'d2', cat:'doors', name:'باب زجاجي مقوى فاخر', desc:'باب داخلي أنيق من الزجاج المقوى المصنفر مع إطار من الألمنيوم الأسود، يسمح بمرور الضوء ويضفي مظهراً عصرياً راقياً على مساحتك.', price:650, oldPrice:null, rating:4.7, reviews:73, badge:'جديد', img:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80' },
+  { id:'d3', cat:'doors', name:'باب منزلق ذهبي', desc:'باب منزلق بنظام Silent-Gliss الصامت، مع ريلات ذهبية مطفية وزجاج شفاف، يوفر خصوصية وأناقة في آنٍ واحد.', price:980, oldPrice:1200, rating:4.6, reviews:38, badge:'', img:'https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=600&q=80' },
+  { id:'d4', cat:'doors', name:'باب خارجي إيطالي', desc:'باب خارجي متين مصنوع من الحديد المطروق مع زجاج مقوى، تصميم إيطالي فاخر يجمع بين الأمان القصوى والجمال الاستثنائي.', price:2400, oldPrice:2800, rating:5.0, reviews:19, badge:'حصري', img:'https://images.unsplash.com/photo-1571442463800-1337d672b9bb?w=600&q=80' },
+  { id:'d5', cat:'doors', name:'باب أكريليك حديث', desc:'باب داخلي لامع من الأكريليك عالي الجودة بألوان متعددة، مقاوم للخدش والرطوبة، خيار عصري ومثالي للمطابخ والحمامات.', price:420, oldPrice:null, rating:4.4, reviews:96, badge:'', img:'https://images.unsplash.com/photo-1600210492493-0946911123ea?w=600&q=80' },
+  { id:'d6', cat:'doors', name:'باب مزدوج كلاسيكي', desc:'باب مزدوج فاخر بورق اللوز المنحوت، مثالي للمداخل الرئيسية والصالات الكبيرة، مصنوع من خشب الصنوبر الصلب المعالج.', price:3200, oldPrice:3800, rating:4.8, reviews:22, badge:'الأفضل', img:'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=600&q=80' },
+  // ---- WARDROBES ----
+  { id:'w1', cat:'wardrobes', name:'خزانة واك-إن كلوزت', desc:'خزانة ملابس بتصميم Walk-in Closet احترافي مع إضاءة LED داخلية، أدراج ناعمة وأرفف قابلة للتعديل. استغلال أمثل للمساحة بأسلوب فندقي.', price:5500, oldPrice:6500, rating:4.9, reviews:31, badge:'فاخر', img:'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbe?w=600&q=80' },
+  { id:'w2', cat:'wardrobes', name:'خزانة أبواب منزلقة', desc:'خزانة بأبواب منزلقة مرايا كاملة، توفر ضعفاً في المساحة المرئية، مصنوعة من خشب HDF مع نظام تعليق صامت لأبواب المرايا.', price:1850, oldPrice:null, rating:4.7, reviews:119, badge:'', img:'https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=600&q=80' },
+  { id:'w3', cat:'wardrobes', name:'خزانة ملابس أطفال', desc:'خزانة ملونة وممتعة مصممة خصيصاً للأطفال، مقاومة للخدش بدهانات آمنة غير سامة، مع مساحات تخزين متعددة المستويات.', price:780, oldPrice:950, rating:4.6, reviews:87, badge:'', img:'https://images.unsplash.com/photo-1611095973763-414019e72400?w=600&q=80' },
+  { id:'w4', cat:'wardrobes', name:'خزانة لاكيه فاخرة', desc:'خزانة ملابس بمشايات لاكيه لامع عالي الجودة، مع مقابض ذهبية وداخل خشب طبيعي، تصميم يجمع الكلاسيكية والمعاصرة.', price:2800, oldPrice:3200, rating:4.8, reviews:44, badge:'جديد', img:'https://images.unsplash.com/photo-1556909114-44e4ec0d24d7?w=600&q=80' },
+  { id:'w5', cat:'wardrobes', name:'خزانة اسكندنافية بيضاء', desc:'خزانة بيضاء نقية بتصميم اسكندنافي بسيط وأنيق، مع أرفف مفتوحة وأدراج وخزانة معلقة، تتسع لكل احتياجات ملابسك.', price:1100, oldPrice:null, rating:4.5, reviews:166, badge:'', img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80' },
+  { id:'w6', cat:'wardrobes', name:'خزانة حديد وخشب مميزة', desc:'خزانة إطارها من الحديد الأسود مع أرفف خشب الجوز الطبيعي، تصميم صناعي مميز يضيف طابع الأصالة والعصرنة لغرفتك.', price:1450, oldPrice:1700, rating:4.7, reviews:53, badge:'', img:'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600&q=80' },
+  // ---- SOFAS ----
+  { id:'s1', cat:'sofas', name:'كنبة مخمل ملكية L', desc:'كنبة على شكل L بتنجيد مخمل إيطالي فاخر، أرجل نحاسية طويلة، وسادات من ريش الوز الطبيعي. الراحة الملكية في منتهى الأناقة.', price:3200, oldPrice:3900, rating:4.9, reviews:94, badge:'الأكثر مبيعاً', img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80' },
+  { id:'s2', cat:'sofas', name:'كنبة جلد إيطالي كلاسيك', desc:'كنبة 3 مقاعد من الجلد الإيطالي الأصيل بخياطة حرفية دقيقة، إطار خشب زان صلب، مثالية للمكاتب والصالونات الكلاسيكية الراقية.', price:2650, oldPrice:null, rating:4.8, reviews:61, badge:'', img:'https://images.unsplash.com/photo-1567016432779-094069958ea5?w=600&q=80' },
+  { id:'s3', cat:'sofas', name:'أريكة مودرن 2 شخص', desc:'أريكة عصرية مريحة لشخصين بنسيج قابل للإزالة والغسيل، مع وسادات ظهر قابلة للتعديل وأرجل من الخشب الطبيعي.', price:890, oldPrice:1100, rating:4.6, reviews:182, badge:'عرض', img:'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=600&q=80' },
+  { id:'s4', cat:'sofas', name:'كنبة قابلة للتحويل', desc:'كنبة ذكية تتحول إلى سرير مريح خلال ثوانٍ، مثالية للضيوف وغرف المعيشة متعددة الاستخدامات. هيكل صلب ونسيج مستدام.', price:1350, oldPrice:null, rating:4.5, reviews:134, badge:'', img:'https://images.unsplash.com/photo-1616627561839-074385245ff6?w=600&q=80' },
+  { id:'s5', cat:'sofas', name:'ركنة عائلية فاخرة', desc:'ركنة عائلية كبيرة 6 مقاعد بتصميم يجمع كل أفراد العائلة، وسادات رغوة T مثبتة، قماش مقاوم للبقع والتلف.', price:4800, oldPrice:5600, rating:4.9, reviews:47, badge:'حصري', img:'https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?w=600&q=80' },
+  { id:'s6', cat:'sofas', name:'فوتيه بذراعين خشبيين', desc:'كرسي فوتيه أنيق بذراعين خشبيين منحوتين وظهر منجد بنسيج تويد فاخر، لمسة كلاسيكية دافئة تناسب أي ركن في منزلك.', price:620, oldPrice:750, rating:4.7, reviews:78, badge:'', img:'https://images.unsplash.com/photo-1586105251261-72a756497a11?w=600&q=80' },
+  // ---- DINING ----
+  { id:'dn1', cat:'dining', name:'طاولة طعام رخام أبيض', desc:'طاولة طعام فاخرة بسطح من الرخام الأبيض الإيطالي الطبيعي، قاعدة من الستانلس ستيل المطفي، تجمع بين الفخامة والمتانة للعائلة الكريمة.', price:3800, oldPrice:4500, rating:4.9, reviews:38, badge:'فاخر', img:'https://images.unsplash.com/photo-1449247709967-d4461a6a6103?w=600&q=80' },
+  { id:'dn2', cat:'dining', name:'طقم طعام 6 كراسي', desc:'طقم غرفة طعام كامل مكون من طاولة خشب الجوز وستة كراسي مبطنة بالجلد الطبيعي، تصميم أوروبي راقٍ لجلسات عائلية لا تنسى.', price:5200, oldPrice:6000, rating:4.8, reviews:27, badge:'الأكثر مبيعاً', img:'https://images.unsplash.com/photo-1617806691559-27e0f1d4a4f3?w=600&q=80' },
+  { id:'dn3', cat:'dining', name:'كرسي طعام مقشور', desc:'كرسي طعام عصري بهيكل خشب الرماد الأبيض وتنجيد قماش مقشور بألوان الموضة، خفيف وأنيق يتناسب مع مختلف أشكال الطاولات.', price:285, oldPrice:null, rating:4.6, reviews:156, badge:'', img:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80' },
+  { id:'dn4', cat:'dining', name:'طاولة قابلة للتمديد', desc:'طاولة طعام ذكية قابلة للتمديد من 150 إلى 240 سم، تتسع لـ 6 أو 10 أشخاص عند الحاجة، مصنوعة من خشب البلوط الصلب الأصيل.', price:1950, oldPrice:2300, rating:4.7, reviews:62, badge:'جديد', img:'https://images.unsplash.com/photo-1596162954151-cdcb4c0f70fb?w=600&q=80' },
+  { id:'dn5', cat:'dining', name:'طاولة صناعية مستديرة', desc:'طاولة مستديرة بقطر 120 سم بتصميم صناعي أنيق، سطح من خشب الصنوبر المعمر وأرجل معدنية متقاطعة، مناسبة للمطابخ المفتوحة.', price:880, oldPrice:null, rating:4.5, reviews:91, badge:'', img:'https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=600&q=80' },
+  { id:'dn6', cat:'dining', name:'بوفيه طعام كلاسيكي', desc:'بوفيه غرفة طعام فاخر بـ 4 أبواب و3 أدراج، خشب الزان مع تشطيب لاكيه، مساحة تخزين واسعة لأدوات الطعام والديكور.', price:1680, oldPrice:2000, rating:4.8, reviews:49, badge:'', img:'https://images.unsplash.com/photo-1556909114-44e4ec0d24d7?w=600&q=80' }
+];
+
+// ============================================================
+// RENDER FUNCTIONS
+// ============================================================
+
+function renderHeroSlider() {
+  const wrapper = document.getElementById('slidesWrapper');
+  const indicators = document.getElementById('heroIndicators');
+  // Duplicate slides for seamless loop (5 slides × 2 = 10)
+  const allSlides = [...heroSlides, ...heroSlides];
+  wrapper.innerHTML = allSlides.map((s,i) => `
+    <div class="slide">
+      <img src="${s.img}" alt="${s.title}" loading="${i===0?'eager':'lazy'}">
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <h2>${s.title}</h2>
+        <p>${s.sub}</p>
+        <a href="#categories" class="btn-primary">${s.btn} <i class="fas fa-arrow-left"></i></a>
+      </div>
+    </div>
+  `).join('');
+  indicators.innerHTML = heroSlides.map((_,i) => `<span class="${i===0?'active':''}"></span>`).join('');
+  // Update indicator based on scroll animation timing
+  const totalTime = 28000;
+  const perSlide = totalTime / heroSlides.length;
+  let current = 0;
+  setInterval(() => {
+    current = (current + 1) % heroSlides.length;
+    document.querySelectorAll('.hero-indicators span').forEach((s,i) => s.classList.toggle('active', i===current));
+  }, perSlide);
+}
+
+function renderCategories() {
+  const grid = document.getElementById('categoriesGrid');
+  const footerCats = document.getElementById('footerCats');
+  grid.innerHTML = categories.map(c => `
+    <div class="category-card" onclick="scrollToSection('products-${c.id}')">
+      <img src="${c.image}" alt="${c.name}" loading="lazy">
+      <div class="category-card-overlay"></div>
+      <div class="category-card-content">
+        <div class="category-card-icon"><i class="fas ${c.icon}"></i></div>
+        <h3>${c.name}</h3>
+        <p>${getProductsForCat(c.id).length} منتج</p>
+      </div>
+      <span class="category-explore">استكشف <i class="fas fa-arrow-left"></i></span>
+    </div>
+  `).join('');
+  if(footerCats) {
+    footerCats.innerHTML = categories.map(c => `
+      <li><a href="#products-${c.id}"><i class="fas fa-chevron-left"></i>${c.name}</a></li>
+    `).join('');
+  }
+}
+
+function getProductsForCat(catId) {
+  return products.filter(p => p.cat === catId);
+}
+
+function renderProductSections() {
+  const container = document.getElementById('productSections');
+  container.innerHTML = categories.map((cat, idx) => {
+    const catProducts = getProductsForCat(cat.id);
+    return `
+    <section class="products-section" id="products-${cat.id}" style="${idx%2===1?'background:var(--bg-light)':''}">
+      <div class="container">
+        <div class="products-section-header">
+          <div class="title-wrap">
+            <h2><span class="cat-icon"><i class="fas ${cat.icon}"></i></span>${cat.name}</h2>
+            <p>تشكيلة راقية من ${cat.name} الفاخرة بأعلى معايير الجودة</p>
+          </div>
+          <button class="view-all-btn" onclick="scrollToSection('categories')"><i class="fas fa-th-large"></i> جميع الأقسام</button>
+        </div>
+        <div class="products-grid">
+          ${catProducts.map(p => renderProductCard(p)).join('')}
+        </div>
+      </div>
+    </section>`;
+  }).join('');
+}
+
+function renderProductCard(p) {
+  const stars = renderStars(p.rating);
+  return `
+  <div class="product-card" onclick="openProductModal('${p.id}')">
+    <div class="product-img-wrap">
+      <img src="${p.img}" alt="${p.name}" loading="lazy">
+      ${p.badge ? `<span class="product-badge ${p.badge==='جديد'?'new':'sale'}">${p.badge}</span>` : ''}
+    </div>
+    <div class="product-body">
+      <div class="product-cat-label">${getCatName(p.cat)}</div>
+      <h3 class="product-name">${p.name}</h3>
+      <p class="product-desc">${p.desc}</p>
+      <div class="product-rating">
+        <div class="stars">${stars}</div>
+        <span class="rating-count">(${p.reviews} تقييم)</span>
+      </div>
+    </div>
+    <div class="product-footer" style="padding:0 18px 18px;border:none;">
+      <div class="product-price">
+        ${p.oldPrice ? `<span class="old-price">$${p.oldPrice}</span>` : ''}
+        <span class="price">$${p.price}</span>
+      </div>
+      <a href="https://wa.me/${WA_NUMBER}?text=أهلاً، أود الاستفسار عن: ${encodeURIComponent(p.name)}" 
+         class="btn-inquire" target="_blank" onclick="event.stopPropagation()">
+        <i class="fab fa-whatsapp"></i>استفسار
+      </a>
+    </div>
+  </div>`;
+}
+
+function renderStars(rating) {
+  let html = '';
+  for(let i=1; i<=5; i++) {
+    if(rating >= i) html += '<i class="fas fa-star"></i>';
+    else if(rating >= i-0.5) html += '<i class="fas fa-star-half-alt"></i>';
+    else html += '<i class="far fa-star empty"></i>';
+  }
+  return html;
+}
+
+function getCatName(catId) {
+  return (categories.find(c=>c.id===catId)||{}).name || catId;
+}
+
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ============================================================
+// PRODUCT MODAL
+// ============================================================
+function openProductModal(id) {
+  const p = products.find(x=>x.id===id);
+  if(!p) return;
+  document.getElementById('modalTitle').textContent = p.name;
+  document.getElementById('modalImg').src = p.img;
+  document.getElementById('modalImg').alt = p.name;
+  document.getElementById('modalCat').textContent = getCatName(p.cat);
+  document.getElementById('modalName').textContent = p.name;
+  document.getElementById('modalDesc').textContent = p.desc;
+  document.getElementById('modalPrice').textContent = p.price;
+  document.getElementById('modalRating').innerHTML = `
+    <div class="stars">${renderStars(p.rating)}</div>
+    <span class="rating-count">(${p.reviews} تقييم)</span>
+    <strong style="color:var(--primary);margin-right:8px;">${p.rating}/5</strong>`;
+  const waMsg = encodeURIComponent(`أهلاً، أود الاستفسار عن: ${p.name} - السعر: $${p.price}`);
+  document.getElementById('modalWaBtn').href = `https://wa.me/${WA_NUMBER}?text=${waMsg}`;
+  document.getElementById('productModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('productModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('productModal').addEventListener('click', function(e){
+  if(e.target === this) closeModal();
+});
+
+// ============================================================
+// ADMIN PANEL
+// ============================================================
+let adminUnlocked = false;
+const ADMIN_PASS = 'dayoub2024';
+
+function openAdmin() {
+  document.getElementById('adminOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderAdminPanel();
+}
+function closeAdmin() {
+  document.getElementById('adminOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleAdminOverlayClick(e){
+  if(e.target === document.getElementById('adminOverlay')) closeAdmin();
+}
+
+function renderAdminPanel() {
+  const panel = document.getElementById('adminPanel');
+  if(!adminUnlocked) {
+    panel.innerHTML = `
+      <div class="admin-header">
+        <h2><i class="fas fa-shield-alt"></i> لوحة التحكم</h2>
+        <button class="admin-close" onclick="closeAdmin()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="admin-password-screen">
+        <i class="fas fa-lock"></i>
+        <h3>منطقة محمية</h3>
+        <p>يرجى إدخال كلمة المرور للوصول إلى لوحة التحكم</p>
+        <div class="admin-password-input-wrap">
+          <input class="admin-input" type="password" id="adminPassInput" placeholder="كلمة المرور" onkeydown="if(event.key==='Enter')checkAdminPass()">
+          <button class="btn-unlock" onclick="checkAdminPass()"><i class="fas fa-unlock-alt"></i> دخول</button>
+          <p class="admin-err" id="passErr"></p>
+          <p style="color:rgba(255,255,255,0.3);font-size:11px;margin-top:8px;">كلمة المرور الافتراضية: dayoub2024</p>
+        </div>
+      </div>`;
+    return;
+  }
+  panel.innerHTML = `
+    <div class="admin-header">
+      <h2><i class="fas fa-cog"></i> لوحة التحكم</h2>
+      <button class="admin-close" onclick="closeAdmin()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="admin-body">
+      <div class="admin-section">
+        <div class="admin-section-title">📊 الإحصائيات</div>
+        <div class="admin-stats">
+          <div class="admin-stat-box"><h3>${products.length}</h3><p>إجمالي المنتجات</p></div>
+          <div class="admin-stat-box"><h3>${categories.length}</h3><p>الأقسام</p></div>
+        </div>
+      </div>
+      <div class="admin-section">
+        <div class="admin-section-title">➕ إضافة منتج جديد</div>
+        <div class="admin-form">
+          <input class="admin-input" id="aName" placeholder="اسم المنتج *">
+          <textarea class="admin-input" id="aDesc" placeholder="وصف المنتج *" rows="3"></textarea>
+          <input class="admin-input" id="aImg" placeholder="رابط صورة المنتج (URL) *">
+          <input class="admin-input" id="aPrice" type="number" placeholder="السعر ($) *">
+          <input class="admin-input" id="aOldPrice" type="number" placeholder="السعر القديم (اختياري)">
+          <input class="admin-input" id="aRating" type="number" placeholder="التقييم (1-5)" min="1" max="5" step="0.1">
+          <input class="admin-input" id="aReviews" type="number" placeholder="عدد التقييمات">
+          <input class="admin-input" id="aBadge" placeholder="شارة (مثل: جديد، عرض)">
+          <select class="admin-select" id="aCat">
+            ${categories.map(c=>`<option value="${c.id}">${c.name}</option>`).join('')}
+          </select>
+          <button class="btn-admin-add" onclick="addProduct()"><i class="fas fa-plus"></i> إضافة المنتج</button>
+        </div>
+      </div>
+      <div class="admin-section">
+        <div class="admin-section-title">📦 المنتجات الحالية (${products.length})</div>
+        <div class="admin-product-list">
+          ${products.map(p=>`
+          <div class="admin-product-item" id="admin-item-${p.id}">
+            <img src="${p.img}" alt="${p.name}">
+            <div class="admin-product-item-info">
+              <h5>${p.name}</h5>
+              <span>${getCatName(p.cat)} — $${p.price}</span>
+            </div>
+            <button class="btn-delete" onclick="deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button>
+          </div>`).join('')}
+        </div>
+      </div>
+      <div class="admin-section">
+        <div class="admin-section-title">🗂️ إضافة قسم جديد</div>
+        <div class="admin-form">
+          <input class="admin-input" id="aCatId" placeholder="معرف القسم (انجليزي، بدون مسافات) *">
+          <input class="admin-input" id="aCatName" placeholder="اسم القسم بالعربية *">
+          <input class="admin-input" id="aCatImg" placeholder="رابط صورة القسم *">
+          <input class="admin-input" id="aCatIcon" placeholder="Font Awesome icon class (مثل: fa-couch)">
+          <button class="btn-admin-add" onclick="addCategory()"><i class="fas fa-folder-plus"></i> إضافة القسم</button>
+        </div>
+      </div>
+      <div class="admin-section">
+        <div class="admin-section-title">🗑️ الأقسام الحالية</div>
+        <div class="admin-cat-list">
+          ${categories.map(c=>`
+          <div class="admin-cat-item" id="admin-cat-${c.id}">
+            <span><i class="fas ${c.icon}" style="margin-left:8px;color:var(--secondary-light)"></i>${c.name}</span>
+            <button class="btn-delete" onclick="deleteCategory('${c.id}')"><i class="fas fa-trash"></i></button>
+          </div>`).join('')}
+        </div>
+      </div>
+      <div class="admin-section">
+        <div class="admin-section-title">⚙️ تحديث رقم الواتساب</div>
+        <div class="admin-form">
+          <input class="admin-input" id="aWaNum" placeholder="رقم الواتساب (مثل: 963912345678)" value="${WA_NUMBER}">
+          <button class="btn-admin-add" onclick="updateWA()"><i class="fab fa-whatsapp"></i> تحديث الرقم</button>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:20px;">
+        <button onclick="adminUnlocked=false;closeAdmin();" style="background:rgba(255,99,99,0.15);color:#ff6b6b;border:1px solid rgba(255,99,99,0.3);padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;">
+          <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+        </button>
+      </div>
+    </div>`;
+}
+
+function checkAdminPass() {
+  const val = document.getElementById('adminPassInput').value;
+  if(val === ADMIN_PASS) {
+    adminUnlocked = true;
+    renderAdminPanel();
+  } else {
+    document.getElementById('passErr').textContent = 'كلمة المرور غير صحيحة';
+  }
+}
+
+function addProduct() {
+  const name = document.getElementById('aName').value.trim();
+  const desc = document.getElementById('aDesc').value.trim();
+  const img = document.getElementById('aImg').value.trim();
+  const price = parseFloat(document.getElementById('aPrice').value);
+  const oldPrice = parseFloat(document.getElementById('aOldPrice').value) || null;
+  const rating = parseFloat(document.getElementById('aRating').value) || 4.5;
+  const reviews = parseInt(document.getElementById('aReviews').value) || 0;
+  const badge = document.getElementById('aBadge').value.trim();
+  const cat = document.getElementById('aCat').value;
+  if(!name || !desc || !img || !price) {
+    showNotif('يرجى ملء الحقول المطلوبة *', 'error');
+    return;
+  }
+  const id = 'p' + Date.now();
+  products.push({id, cat, name, desc, price, oldPrice, rating, reviews, badge, img});
+  renderAll();
+  renderAdminPanel();
+  showNotif(`✓ تم إضافة "${name}" بنجاح`, 'success');
+}
+
+function deleteProduct(id) {
+  const p = products.find(x=>x.id===id);
+  if(!confirm(`هل تريد حذف "${p?.name}"؟`)) return;
+  products = products.filter(x=>x.id!==id);
+  renderAll();
+  renderAdminPanel();
+  showNotif('تم حذف المنتج بنجاح', 'success');
+}
+
+function addCategory() {
+  const id = document.getElementById('aCatId').value.trim().replace(/\s/g,'');
+  const name = document.getElementById('aCatName').value.trim();
+  const image = document.getElementById('aCatImg').value.trim();
+  const icon = document.getElementById('aCatIcon').value.trim() || 'fa-star';
+  if(!id || !name || !image) {
+    showNotif('يرجى ملء حقول القسم المطلوبة', 'error');
+    return;
+  }
+  if(categories.find(c=>c.id===id)) {
+    showNotif('هذا المعرف موجود مسبقاً', 'error');
+    return;
+  }
+  categories.push({id, name, icon, count:0, image});
+  renderAll();
+  renderAdminPanel();
+  showNotif(`✓ تم إضافة قسم "${name}"`, 'success');
+}
+
+function deleteCategory(id) {
+  const c = categories.find(x=>x.id===id);
+  const count = getProductsForCat(id).length;
+  if(!confirm(`حذف قسم "${c?.name}"؟\nسيتم حذف ${count} منتج أيضاً.`)) return;
+  categories = categories.filter(x=>x.id!==id);
+  products = products.filter(x=>x.cat!==id);
+  renderAll();
+  renderAdminPanel();
+  showNotif(`تم حذف القسم "${c?.name}"`, 'success');
+}
+
+function updateWA() {
+  const num = document.getElementById('aWaNum').value.trim();
+  if(num) {
+    window.WA_NUMBER = num;
+    showNotif('تم تحديث رقم الواتساب', 'success');
+  }
+}
+
+function renderAll() {
+  renderCategories();
+  renderProductSections();
+}
+
+// ============================================================
+// NOTIFICATIONS
+// ============================================================
+function showNotif(msg, type='success') {
+  const n = document.getElementById('notif');
+  document.getElementById('notif-msg').textContent = msg;
+  n.className = `notif show ${type}`;
+  setTimeout(() => n.classList.remove('show'), 3500);
+}
+
+// ============================================================
+// HEADER SCROLL
+// ============================================================
+window.addEventListener('scroll', () => {
+  const header = document.getElementById('header');
+  header.classList.toggle('scrolled', window.scrollY > 50);
+  const scrollTop = document.getElementById('scrollTop');
+  scrollTop.classList.toggle('visible', window.scrollY > 400);
+  // Active nav
+  const sections = ['home','categories','products-lighting','services','about','contact'];
+  const navLinks = document.querySelectorAll('.nav a');
+  let current = '';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if(el && window.scrollY >= el.offsetTop - 120) current = id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+
+// ============================================================
+// MOBILE MENU
+// ============================================================
+function toggleMobileMenu() {
+  const nav = document.getElementById('mobileNav');
+  nav.classList.toggle('open');
+}
+function closeMobileMenu() {
+  document.getElementById('mobileNav').classList.remove('open');
+}
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  renderHeroSlider();
+  renderAll();
+});
+</script>
+</body>
+</html>
